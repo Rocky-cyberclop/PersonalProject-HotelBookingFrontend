@@ -1,0 +1,82 @@
+a{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.mr5{
+    margin-right: 5px;
+}
+
+.ml5{
+    margin-left: 5px;
+}
+
+.container{
+    width: 100%;
+    position: fixed;
+    background-color: #8B4513;
+    color: aliceblue;
+    min-height: 50px;
+    display: flex;
+
+    .header{
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+
+        .logo{
+            width: 70%;
+
+            h1{
+                width: fit-content;
+            }
+        }
+
+        .nav {
+            width: 30%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+      
+            .navItemWrapper {
+                display: flex;
+                justify-content: center;
+                .navItem{
+                    display: flex;
+                    justify-content: center;
+                    margin: 0 10px;
+                    padding: 10px;
+                    border-radius: 10px;
+                    cursor: pointer;
+
+                    &:hover{
+                        background-color: #8f6344;
+                    }
+                }
+            }
+
+            .nav5{
+                width: 50%;
+            }
+
+            .nav4{
+                width: 40%;
+            }
+
+            .nav3{
+                width: 30%;
+            }
+
+            .nav2{
+                width: 20%;
+            }
+
+            .nav1{
+                width: 10%;
+            }
+      
+            // Add more navigation-related styles if necessary
+        }
+    }
+}

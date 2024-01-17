@@ -1,3 +1,19 @@
+.displayNone{
+  display: none;
+}
+
+.displayFlex{
+  display: flex;
+}
+
+.alginItemCenter{
+  align-items: center;
+}
+
+.icon{
+  margin: 0 5px;
+}
+
 .mainBackground {
   background-image: url("../../assets/images/main_lobby.jpg");
   background-size: cover;
@@ -6,10 +22,121 @@
   background-size: 100% 100%;
   height: 100vh;
   margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .calendar{
-  display: block;
-  width: 1000px;
+  display: none;
+  width: 700px;
   background-color: aliceblue;
+  position: absolute;
+  top: 120%;
+  left: -2%;
+  border-radius: 10px;
+  box-shadow: 3px 3px 20px 0px;
 }
+
+.peopleNumber{
+  display: none;
+  width: 70%;
+  min-height: 50px;
+  background-color: aliceblue;
+  position: absolute;
+  top: 120%;
+  left: .5%;
+  box-shadow: 3px 3px 20px 0px;
+  border-radius: 10px;
+  padding: 10px;
+
+  .peopleItem{
+    display: flex;
+    justify-content: space-between;
+    margin: 3px;
+
+    .label, .minus, .number, .plus{
+      padding: 10px;
+    }
+
+    .input{
+      display: flex;
+      justify-content: space-evenly;
+      border: 1px solid gray;
+      border-radius: 5px;
+
+      .number{
+        display: flex;
+        justify-content: center;
+        width: 30px;
+      }
+
+      .minus:hover, .plus:hover{
+        
+        background-color: rgb(201, 245, 255);
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .peopleItem:first-child{
+    margin-top: 10px;
+  }
+
+  .peopleItem:last-child{
+    margin-bottom: 10px;
+    justify-content: center;
+    padding: 10px;
+    border: 2px solid #2b70d7;
+    border-radius: 10px;
+
+    &:hover{
+      background-color: #bad6ff;
+      cursor: pointer;
+    }
+  }
+}
+
+.content{
+  .inputBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 70px;
+    width: auto;
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    background-color: #195bbe;
+    margin: 0 auto;
+    padding: 0 5px;
+    border-radius: 10px;
+
+    .inputItem{
+      width: 33.3333%;
+      height: 55px;
+      padding: 10px;
+      margin: 2px;
+      background-color: aliceblue;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .inputItem:nth-child(3){
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e47e35;
+      cursor: pointer;
+      &:hover{
+        background-color: #f28e47;
+      }
+    }
+
+    .fontSizeMedium{
+      font-size: medium;
+    }
+  }
+}
+

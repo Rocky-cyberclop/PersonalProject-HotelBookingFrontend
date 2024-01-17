@@ -1,4 +1,4 @@
-import style from './MainLayout.module.scss';
+// import style from './MainLayout.module.scss';
 import Header from '../components/Header';
 
 function MainLayout({children}){

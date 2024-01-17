@@ -1,7 +1,7 @@
 import style from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faInfo, faLanguage, faPowerOff, faQuestionCircle, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faLanguage, faPowerOff, faQuestionCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 
@@ -18,6 +18,7 @@ function Header(){
     const HandleLogin = function(){
         localStorage.setItem('token','user')
         setUser({name:'rocky'})
+        
     }
 
     return(

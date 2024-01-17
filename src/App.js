@@ -1,11 +1,13 @@
 import { publicRoute } from "./routes/Route";
 // Change the order to Route, Router, Routes will makes bug
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 
 function App() {
   return (
     <Router>
+      <ToastContainer/>
       <div className="App">
         <Routes>
           {publicRoute.map((singleRoute, index)=>{

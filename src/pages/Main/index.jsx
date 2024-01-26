@@ -4,13 +4,13 @@ import { Calendar } from 'react-check-in-out-calendar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 function Main() {
-    let _checkInDate = "", _checkOutDate = "";
+    const [date, setDate] = useState(() => ({checkInDate: 'null', checkOutDate: 'null'}))
 
     const [isOneModalOpen, setIsOneModalOpen] = useState(null)
     const [adults, setAdult] = useState(2)
@@ -50,10 +50,14 @@ function Main() {
         }
     }
 
-    const HandleDateChange = function (checkInDate, checkOutDate) {
-        _checkInDate = checkInDate;
-        _checkOutDate = checkOutDate;
-    }
+    const HandleDateChange = useCallback((checkInDate, checkOutDate) => {
+        setDate({
+            checkInDate: checkInDate,
+            checkOutDate: checkOutDate
+        })
+        console.log(checkInDate, checkOutDate)
+    }, [])
+
 
     // Adults changing
     const HandleAdultMinus = function () {
@@ -87,8 +91,9 @@ function Main() {
     }
 
     const HandleChooseRoom = function () {
-        if (_checkInDate == "Invalid Date" || _checkOutDate == "Invalid Date"
-            || _checkInDate == undefined || _checkOutDate == undefined) {
+        // console.log(date.checkInDate+" "+date.checkOutDate)
+        if (date.checkInDate == "Invalid Date" || date.checkOutDate == "Invalid Date"
+            || date.checkOutDate == undefined || date.checkOutDate == undefined) {
             toast.error("Please choose date to check-in and date to check-out");
             return;
         }
@@ -99,8 +104,8 @@ function Main() {
                 // 'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({
-                "checkIn": _checkInDate,
-                "checkOut": _checkOutDate,
+                "checkIn": date.checkInDate,
+                "checkOut": date.checkOutDate,
                 "adults": adults,
                 "children": children,
                 "room": room
@@ -127,8 +132,8 @@ function Main() {
                                 numMonths={2}
                                 language="en"
                                 maximumMonths={12}
-                                defaultCheckIn={"null"}
-                                defaultCheckOut={"null"}
+                                defaultCheckIn={date.checkInDate}
+                                defaultCheckOut={date.checkOutDate}
                                 isRectangular={false}
                                 onCheckInOutChange={HandleDateChange}
                             />

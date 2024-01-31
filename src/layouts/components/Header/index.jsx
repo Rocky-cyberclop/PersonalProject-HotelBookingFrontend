@@ -36,7 +36,7 @@ function Header(){
                     {!token && 
                     <div className={style.navItemWrapper}>
                         <Link to={"/login"}><div className={style.navItem}>Login</div></Link>
-                        <div className={style.navItem}><Link to={"/register"}>Register</Link></div>
+                        <Link to={"/register"}><div className={style.navItem}>Register</div></Link>
                         <div className={style.navItem}><FontAwesomeIcon icon={faQuestionCircle}/></div>
                     </div>
                     }

@@ -1,0 +1,35 @@
+.container {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    position: relative;
+
+    .elevator{
+        position: absolute;
+        top: 200px;
+        right: 105%;
+
+        .up, .down{
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            &:hover{
+                background-color: rgb(110, 113, 112);
+            }
+        }
+
+    }
+
+    .floor{
+        width: 78%;
+    }
+
+    .info{
+        width: 22%;
+        background-color: darkgoldenrod;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 5px;
+    }
+
+}

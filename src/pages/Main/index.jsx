@@ -6,6 +6,7 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
 import { useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -16,6 +17,8 @@ function Main() {
     const [adults, setAdult] = useState(2)
     const [children, setChildren] = useState(0)
     const [room, setRoom] = useState(1)
+    const navigate = useNavigate()
+
 
     // Prevent the Propagation from child to parent 
     const HandlePropagation = function (event) {
@@ -97,20 +100,21 @@ function Main() {
             toast.error("Please choose date to check-in and date to check-out");
             return;
         }
-        fetch('http://localhost:8080/api/chooseRoom', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({
-                "checkIn": date.checkInDate,
-                "checkOut": date.checkOutDate,
-                "adults": adults,
-                "children": children,
-                "room": room
-            }),
-        }).catch(err=> {console.log(err);});
+        // fetch('http://localhost:8080/api/chooseRoom', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         // 'Authorization': 'Bearer ' + token
+        //     },
+        //     body: JSON.stringify({
+        //         "checkIn": date.checkInDate,
+        //         "checkOut": date.checkOutDate,
+        //         "adults": adults,
+        //         "children": children,
+        //         "room": room
+        //     }),
+        // }).catch(err=> {console.log(err);});
+        navigate('/chooseRoom')
     }
 
     return (

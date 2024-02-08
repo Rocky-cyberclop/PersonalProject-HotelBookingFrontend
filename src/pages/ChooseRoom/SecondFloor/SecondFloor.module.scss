@@ -1,0 +1,28 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, auto);
+    gap: 20px;
+    padding: 20px;
+    background-color: #b39784;
+    margin: 10px;
+    border-radius: 10px;
+    height: 600px;
+
+    .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+
+        &.hasBorder {
+            border: 1px solid #000;
+        }
+
+        &.large {
+            grid-column: span 2;
+            grid-row: span 3;
+        }
+    }
+
+}

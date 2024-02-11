@@ -9,8 +9,13 @@ function Room(props) {
 
     const data = props.data;
 
+    const HandleClick = function(){
+        props.toggleRoomInfo(data)
+    }
+
     return (
-        <div className={`${style.container} ${data && data.booked && style.booked}`}>
+        <div className={`${style.container} ${data && data.booked && style.booked}`}
+            onClick={HandleClick}>
             {data && (
                 <img height={100} src={
                     (data.capacity === 1 && Single) ||
@@ -28,11 +33,17 @@ function ConferenceRoom(props) {
 
     const data = props.data;
 
+    const HandleClick = function(){
+        props.toggleRoomInfo(data)
+    }
+
+
     return (
-        <div className={`${style.container} ${data && data.booked && style.booked}`}>
-            {data && 
-            (data.capacity === 1 && "Small reference room")||
-            (data.capacity === 2 && "Large reference room")
+        <div className={`${style.container} ${data && data.booked && style.booked}`}
+            onClick={HandleClick}>
+            {data &&
+                (data.capacity === 1 && "Small reference room") ||
+                (data.capacity === 2 && "Large reference room")
             }
             <img height={100} src={ConferenceRoomImage} alt="" />
         </div>

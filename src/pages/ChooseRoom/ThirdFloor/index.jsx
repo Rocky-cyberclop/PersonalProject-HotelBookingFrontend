@@ -5,7 +5,7 @@ import { Room } from '../../../components/Room';
 import { useState } from 'react';
 import Cafeteria from '../../../assets/images/cafeteria.png';
 
-function ThirdFloor() {
+function ThirdFloor({toggleRoomInfo}) {
 
     const [rooms, setRooms] = useState(
         [
@@ -48,15 +48,15 @@ function ThirdFloor() {
             <h1>Third Floor</h1>
             <div className={style.container}>
                 <div className={`${style.item} ${style.hasBorder}`}><FontAwesomeIcon icon={faStairs} size='4x' /></div>
-                <div className={style.item}><Room data={rooms[0]} /></div>
-                <div className={style.item}><Room data={rooms[1]} /></div>
+                <div className={style.item}><Room data={rooms[0]} toggleRoomInfo={toggleRoomInfo}/></div>
+                <div className={style.item}><Room data={rooms[1]} toggleRoomInfo={toggleRoomInfo}/></div>
                 <div className={`${style.item} ${style.hasBorder}`}><FontAwesomeIcon icon={faStairs} size='4x' /></div>
-                <div className={style.item}><Room data={rooms[2]} /></div>
+                <div className={style.item}><Room data={rooms[2]} toggleRoomInfo={toggleRoomInfo}/></div>
                 <div className={`${style.item} ${style.large}`}> <div><div className={style.displayFlex}>Cafeteria</div> <img src={Cafeteria} alt='' /></div>  </div>
-                <div className={style.item}><Room data={rooms[3]} /></div>
-                <div className={style.item}><Room data={rooms[4]} /></div>
-                <div className={style.item}><Room data={rooms[5]} /></div>
-                <div className={style.item}><Room data={rooms[6]} /></div>
+                <div className={style.item}><Room data={rooms[3]} toggleRoomInfo={toggleRoomInfo}/></div>
+                <div className={style.item}><Room data={rooms[4]} toggleRoomInfo={toggleRoomInfo}/></div>
+                <div className={style.item}><Room data={rooms[5]} toggleRoomInfo={toggleRoomInfo}/></div>
+                <div className={style.item}><Room data={rooms[6]} toggleRoomInfo={toggleRoomInfo}/></div>
                 <div className={`${style.item} ${style.hasBorder}`}><FontAwesomeIcon icon={faElevator} size='4x' /></div>
             </div>
         </>

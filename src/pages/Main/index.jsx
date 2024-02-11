@@ -100,6 +100,7 @@ function Main() {
             toast.error("Please choose date to check-in and date to check-out");
             return;
         }
+        // Send a guest token or not now
         // fetch('http://localhost:8080/api/chooseRoom', {
         //     method: 'POST',
         //     headers: {

@@ -4,14 +4,15 @@ import { Calendar } from 'react-check-in-out-calendar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 
 function Main() {
-    const [date, setDate] = useState(() => ({checkInDate: 'null', checkOutDate: 'null'}))
+    const [date, setDate] = useState(() => ({ checkInDate: 'null', checkOutDate: 'null' }))
 
     const [isOneModalOpen, setIsOneModalOpen] = useState(null)
     const [adults, setAdult] = useState(2)
@@ -100,22 +101,23 @@ function Main() {
             toast.error("Please choose date to check-in and date to check-out");
             return;
         }
-        // Send a guest token or not now
-        // fetch('http://localhost:8080/api/chooseRoom', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         // 'Authorization': 'Bearer ' + token
-        //     },
-        //     body: JSON.stringify({
-        //         "checkIn": date.checkInDate,
-        //         "checkOut": date.checkOutDate,
-        //         "adults": adults,
-        //         "children": children,
-        //         "room": room
-        //     }),
-        // }).catch(err=> {console.log(err);});
-        navigate('/chooseRoom')
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/reservation/chooseRoom');
+                console.log(response.data);
+                navigate('/chooseRoom', {
+                    state: {
+                        token: response.data,
+                        from: date.checkInDate,
+                        to: date.checkOutDate
+                    }
+                }) //Pass date through the component to fetch rooms
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return;
+            }
+        };
+        fetchData();
     }
 
     return (

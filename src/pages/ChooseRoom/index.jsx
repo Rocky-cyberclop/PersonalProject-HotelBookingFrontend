@@ -5,13 +5,14 @@ import ThirdFloor from './ThirdFloor';
 import ForthFloor from './ForthFloor'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Drawer } from '@mui/material';
 import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 import CarouselComponent from '../../components/Carousel';
 import TextField from '@mui/material/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const drawerWidth = 500;
 
@@ -24,7 +25,6 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
 }));
 
 function ChooseRoom() {
-
     const [currentFloorIndex, setCurrentFloorIndex] = useState(0)
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [room, setRoom] = useState({
@@ -39,7 +39,22 @@ function ChooseRoom() {
         total: '',
         tax: ''
     })
+    // const [stompClient, setStompClient] = useState(null)
 
+    const location = useLocation();
+    const previousState = location.state;
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!previousState) {
+            navigate("/")
+        }
+        // return () => {
+        //     if (stompClient) {
+        //         stompClient.disconnect();
+        //     }
+        // };
+    }, [])
+        
     const HandleUpFloor = function () {
         if (currentFloorIndex < 3) {
             setCurrentFloorIndex(preIndex => preIndex + 1)
@@ -81,7 +96,29 @@ function ChooseRoom() {
         updatedInfoReserve.total = updatedInfoReserve.price + updatedInfoReserve.tax;
         setInfoReserve(updatedInfoReserve);
         setIsDrawerOpen((prevState) => !prevState);
+        sendMessage(room.number)
     }
+
+    const sendMessage = (number = 0) => {
+        let type=''
+        if(reserveString==='Reserve')type='RESERVE'
+        else type='UNRESERVED'
+        // stompClient.send("/app/roomReserve",
+        //     {},
+        //     JSON.stringify({ from: previousState.from, to: previousState.to, room: number, type: type, guest: previousState.token })
+        // );
+        const fetchData = async () => {
+            try {
+                const requestBody = { from: previousState.from, to: previousState.to, room: number, type: type, guest: previousState.token };
+                const response = await axios.post('http://localhost:8080/api/reservation/reserve',requestBody);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return;
+            }
+        };
+        fetchData()
+    }
+
 
     return (
         <div className={style.container}>
@@ -90,10 +127,10 @@ function ChooseRoom() {
                 <div className={style.down} onClick={HandleDownFloor}><FontAwesomeIcon icon={faCaretDown} size='2xl' /></div>
             </div>
             <div className={style.floor}>
-                {currentFloorIndex === 0 && <FirstFloor toggleRoomInfo={toggleRoomInfo} />}
-                {currentFloorIndex === 1 && <SecondFloor toggleRoomInfo={toggleRoomInfo} />}
-                {currentFloorIndex === 2 && <ThirdFloor toggleRoomInfo={toggleRoomInfo} />}
-                {currentFloorIndex === 3 && <ForthFloor toggleRoomInfo={toggleRoomInfo} />}
+                {currentFloorIndex === 0 && <FirstFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}/>}
+                {currentFloorIndex === 1 && <SecondFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}/>}
+                {currentFloorIndex === 2 && <ThirdFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}/>}
+                {currentFloorIndex === 3 && <ForthFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}/>}
             </div>
             <div className={style.info}>
                 <div className={style.header}>Choose your rooms</div>
@@ -139,10 +176,8 @@ function ChooseRoom() {
                             disabled={infoReserve.total === 0 || infoReserve.total === ''}
                         >
                             <Link
-                                to={{
-                                    pathname: '/deposit',
-                                    state: { infoReserve } // Pass the state object
-                                }}
+                                to={'/deposit'}
+                                state={infoReserve} // Pass the state object
                             >
                                 Deposit
                             </Link>

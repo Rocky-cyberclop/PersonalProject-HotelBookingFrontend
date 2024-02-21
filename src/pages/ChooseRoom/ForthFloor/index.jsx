@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Room, ConferenceRoom } from '../../../components/Room';
 import { useState } from 'react';
 
-function ForthFloor({toggleRoomInfo}) {
+function ForthFloor({toggleRoomInfo, reserveInfo}) {
 
     const [rooms, setRooms] = useState(
         [

@@ -5,7 +5,7 @@ import { Room } from '../../../components/Room';
 import { useState } from 'react';
 import Cafeteria from '../../../assets/images/cafeteria.png';
 
-function ThirdFloor({toggleRoomInfo}) {
+function ThirdFloor({toggleRoomInfo, reserveInfo}) {
 
     const [rooms, setRooms] = useState(
         [

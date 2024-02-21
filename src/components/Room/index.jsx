@@ -10,7 +10,7 @@ function Room(props) {
     const data = props.data;
 
     const HandleClick = function(){
-        props.toggleRoomInfo(data)
+        props.toggleRoomInfo(data);
     }
 
     return (
@@ -35,6 +35,7 @@ function ConferenceRoom(props) {
 
     const HandleClick = function(){
         props.toggleRoomInfo(data)
+        // console.log(props.toggleRoomInfo)
     }
 
 

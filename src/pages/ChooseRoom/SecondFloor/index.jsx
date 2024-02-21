@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Room } from '../../../components/Room';
 import { useState } from 'react';
 
-function SecondFloor({toggleRoomInfo}) {
+function SecondFloor({toggleRoomInfo, reserveInfo}) {
 
     const [rooms, setRooms] = useState(
         [

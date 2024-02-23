@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLanguage, faPowerOff, faQuestionCircle, faTicket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import Logo from '../../../assets/images/logo.jpg';
 
 
 function Header(){
@@ -25,7 +26,7 @@ function Header(){
     return(
         <div className={style.container}>
             <div className={style.header}>
-                <h1 className={style.logo}><Link to={"/"}>LOGO</Link></h1>
+                <h1 className={style.logo}><Link to={"/"}> <img src={Logo} width={50} alt="" /> </Link></h1>
                 <div className={style.nav}>
                     <div className={style.navItemWrapper}>
                         <div className={style.navItem}>English<FontAwesomeIcon className={style.ml5} icon={faLanguage}/></div>

@@ -25,7 +25,7 @@ function CarouselComponent({ images }) {
         <StyledSlider {...settings}>
             {images && images.map((image, index) => (
                 <div key={index}>
-                    <img src={image} style={{ width: '300px' }}  alt={`Slide ${index}`} />
+                    <img src={`http://localhost:8080/api/room/assets/images/${image}`} style={{ width: '300px' }}  alt={`Slide ${index}`} />
                 </div>
             ))}
         </StyledSlider>

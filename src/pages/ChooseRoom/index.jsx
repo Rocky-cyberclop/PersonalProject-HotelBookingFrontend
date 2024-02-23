@@ -1,3 +1,4 @@
+/* eslint-disable */
 import style from './ChooseRoom.module.scss'
 import FirstFloor from './FirstFloor';
 import SecondFloor from './SecondFloor';
@@ -5,14 +6,17 @@ import ThirdFloor from './ThirdFloor';
 import ForthFloor from './ForthFloor'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Drawer } from '@mui/material';
 import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 import CarouselComponent from '../../components/Carousel';
 import TextField from '@mui/material/TextField';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import { toast } from 'react-toastify';
 
 const drawerWidth = 500;
 
@@ -39,7 +43,38 @@ function ChooseRoom() {
         total: '',
         tax: ''
     })
-    // const [stompClient, setStompClient] = useState(null)
+
+    const [handleMessage, setHandleMessage] = useState(null)
+    const stompClientRef = useRef(null);
+
+    useEffect(() => {
+        const socket = new SockJS('http://localhost:8080/ws');
+        const stomp = Stomp.over(socket);
+        stompClientRef.current = stomp
+
+        stomp.connect({}, () => {
+            stomp.subscribe('/topic/room-state', onMessageReceived);
+
+        }, onError);
+
+        return () => {
+            if (stompClientRef.current) {
+                stompClientRef.current.disconnect();
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (stompClientRef.current) {
+            stompClientRef.current.connect({}, () => {
+                stompClientRef.current.subscribe('/topic/room-state', onMessageReceived);
+                stompClientRef.current.send('/app/connect', {}, JSON.stringify({ guest: previousState.token }))
+            });
+        }
+
+        return () => {
+        };
+    }, []);
 
     const location = useLocation();
     const previousState = location.state;
@@ -48,13 +83,8 @@ function ChooseRoom() {
         if (!previousState) {
             navigate("/")
         }
-        // return () => {
-        //     if (stompClient) {
-        //         stompClient.disconnect();
-        //     }
-        // };
     }, [])
-        
+
     const HandleUpFloor = function () {
         if (currentFloorIndex < 3) {
             setCurrentFloorIndex(preIndex => preIndex + 1)
@@ -67,7 +97,7 @@ function ChooseRoom() {
         }
     }
 
-    const toggleRoomInfo = (data) => {
+    const toggleRoomInfo = (data, setRooms) => {
         if (infoReserve.rooms.includes(data.number)) setReserveString('Unreserve')
         else setReserveString('Reserve')
         setIsDrawerOpen((prevState) => !prevState);
@@ -99,18 +129,18 @@ function ChooseRoom() {
         sendMessage(room.number)
     }
 
+    const triggerBindingOnMessageReceive = (setRooms) => {
+        setHandleMessage(() => setRooms)
+    }
+
     const sendMessage = (number = 0) => {
-        let type=''
-        if(reserveString==='Reserve')type='RESERVE'
-        else type='UNRESERVED'
-        // stompClient.send("/app/roomReserve",
-        //     {},
-        //     JSON.stringify({ from: previousState.from, to: previousState.to, room: number, type: type, guest: previousState.token })
-        // );
+        let type = ''
+        if (reserveString === 'Reserve') type = 'RESERVE'
+        else type = 'UNRESERVED'
         const fetchData = async () => {
             try {
                 const requestBody = { from: previousState.from, to: previousState.to, room: number, type: type, guest: previousState.token };
-                const response = await axios.post('http://localhost:8080/api/reservation/reserve',requestBody);
+                const response = await axios.post('http://localhost:8080/api/reservation/reserve', requestBody);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 return;
@@ -119,6 +149,40 @@ function ChooseRoom() {
         fetchData()
     }
 
+    const onError = (e) => {
+        console.log("Error connect: ", e);
+    };
+
+    const onMessageReceived = (message) => {
+        if (JSON.parse(message.body).room !== null)
+            setHandleMessage(pre => {
+                pre(message)
+                return pre
+            })
+    };
+
+    const handleDoneChooseRoom = function () {
+        const fetchData = async () => {
+            try {
+                const response = await axios.post(`http://localhost:8080/api/reservation/doneChooseRoom`, previousState.token);
+                console.log(response.data);
+                if (response.data === null) {
+                    toast.error("Reservation no longer exist please check again!");
+                    return;
+                }
+                navigate('/fillInfo', {
+                    state: {
+                        reservation: response.data,
+                        adults: previousState.adults
+                    }
+                })
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return;
+            }
+        };
+        fetchData();
+    }
 
     return (
         <div className={style.container}>
@@ -127,10 +191,14 @@ function ChooseRoom() {
                 <div className={style.down} onClick={HandleDownFloor}><FontAwesomeIcon icon={faCaretDown} size='2xl' /></div>
             </div>
             <div className={style.floor}>
-                {currentFloorIndex === 0 && <FirstFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}/>}
-                {currentFloorIndex === 1 && <SecondFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}/>}
-                {currentFloorIndex === 2 && <ThirdFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}/>}
-                {currentFloorIndex === 3 && <ForthFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}/>}
+                {currentFloorIndex === 0 && <FirstFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}
+                    triggerBindingOnMessageReceive={triggerBindingOnMessageReceive} />}
+                {currentFloorIndex === 1 && <SecondFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}
+                    triggerBindingOnMessageReceive={triggerBindingOnMessageReceive} />}
+                {currentFloorIndex === 2 && <ThirdFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}
+                    triggerBindingOnMessageReceive={triggerBindingOnMessageReceive} />}
+                {currentFloorIndex === 3 && <ForthFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}
+                    triggerBindingOnMessageReceive={triggerBindingOnMessageReceive} />}
             </div>
             <div className={style.info}>
                 <div className={style.header}>Choose your rooms</div>
@@ -139,7 +207,7 @@ function ChooseRoom() {
                     <div className={style.listRooms}>
                         {
                             infoReserve.rooms.map((value, index) => (
-                                <div key={index}>{value},</div>
+                                <div key={index} className={style.roomItem}>{value},</div>
                             ))
                         }
                     </div>
@@ -174,13 +242,9 @@ function ChooseRoom() {
                             variant='contained'
                             color='primary'
                             disabled={infoReserve.total === 0 || infoReserve.total === ''}
+                            onClick={handleDoneChooseRoom}
                         >
-                            <Link
-                                to={'/deposit'}
-                                state={infoReserve} // Pass the state object
-                            >
-                                Deposit
-                            </Link>
+                            Fill your information
                         </Button>
                     </div>
                     <div>When you choose rooms, we will keep those rooms

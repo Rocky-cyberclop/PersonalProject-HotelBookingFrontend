@@ -1,7 +1,7 @@
-import style from './Deposit.module.scss'
+import style from './FillInfo.module.scss'
 import { useLocation } from 'react-router-dom'
 
-function Deposit(){
+function FillInfo(){
 
     const location = useLocation();
     const infoReserve = location.state;
@@ -9,9 +9,9 @@ function Deposit(){
 
 
     return (
-        <h1>Deposit</h1>
+        <h1 className={style.h1}>{infoReserve.adults}</h1>
 
     )
 }
 
-export default Deposit
+export default FillInfo

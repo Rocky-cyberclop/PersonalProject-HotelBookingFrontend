@@ -20,6 +20,20 @@ function Main() {
     const [room, setRoom] = useState(1)
     const navigate = useNavigate()
 
+    useEffect(()=>{
+        const resetReservation = async () => {
+            try {
+                setTimeout(async () => {
+                    const response = await axios.get('http://localhost:8080/api/reservation/doClean');
+                }, 1500);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return;
+            }
+        };
+        resetReservation()
+    },[])
+
 
     // Prevent the Propagation from child to parent 
     const HandlePropagation = function (event) {
@@ -103,13 +117,14 @@ function Main() {
         }
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/reservation/chooseRoom');
+                const response = await axios.post(`http://localhost:8080/api/reservation/chooseRoom`, {from: date.checkInDate, to:date.checkOutDate});
                 console.log(response.data);
                 navigate('/chooseRoom', {
                     state: {
                         token: response.data,
                         from: date.checkInDate,
-                        to: date.checkOutDate
+                        to: date.checkOutDate,
+                        adults: adults
                     }
                 }) //Pass date through the component to fetch rooms
             } catch (error) {

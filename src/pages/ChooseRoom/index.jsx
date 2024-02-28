@@ -112,21 +112,35 @@ function ChooseRoom() {
     };
 
     const HandleReserve = function () {
-        const updatedInfoReserve = { ...infoReserve };
-        if (!infoReserve.rooms.includes(room.number)) {
-            updatedInfoReserve.rooms.push(room.number);
-            updatedInfoReserve.prices.push(room.price);
+        const updateReserve = () => {
+            const updatedInfoReserve = { ...infoReserve };
+            if (!infoReserve.rooms.includes(room.number)) {
+                updatedInfoReserve.rooms.push(room.number);
+                updatedInfoReserve.prices.push(room.price);
+            }
+            else {
+                updatedInfoReserve.rooms.splice(updatedInfoReserve.rooms.indexOf(room.number), 1);
+                updatedInfoReserve.prices.splice(updatedInfoReserve.rooms.indexOf(room.number), 1);
+            }
+            updatedInfoReserve.price = updatedInfoReserve.prices.reduce((acc, curr) => acc + curr, 0);
+            updatedInfoReserve.tax = updatedInfoReserve.price * 0.1;
+            updatedInfoReserve.total = updatedInfoReserve.price + updatedInfoReserve.tax;
+            setInfoReserve(updatedInfoReserve);
+            setIsDrawerOpen((prevState) => !prevState);
+            sendMessage(room.number)
+        }
+        if (reserveString === 'Reserve') {
+            if (previousState.room !== 0) {
+                previousState.room = previousState.room - 1
+                updateReserve()
+            } else {
+                toast.error("You have chosen too much room!")
+            }
         }
         else {
-            updatedInfoReserve.rooms.splice(updatedInfoReserve.rooms.indexOf(room.number), 1);
-            updatedInfoReserve.prices.splice(updatedInfoReserve.rooms.indexOf(room.number), 1);
+            previousState.room = previousState.room + 1
+            updateReserve()
         }
-        updatedInfoReserve.price = updatedInfoReserve.prices.reduce((acc, curr) => acc + curr, 0);
-        updatedInfoReserve.tax = updatedInfoReserve.price * 0.1;
-        updatedInfoReserve.total = updatedInfoReserve.price + updatedInfoReserve.tax;
-        setInfoReserve(updatedInfoReserve);
-        setIsDrawerOpen((prevState) => !prevState);
-        sendMessage(room.number)
     }
 
     const triggerBindingOnMessageReceive = (setRooms) => {
@@ -139,7 +153,8 @@ function ChooseRoom() {
         else type = 'UNRESERVED'
         const fetchData = async () => {
             try {
-                const requestBody = { from: previousState.from, to: previousState.to, room: number, type: type, guest: previousState.token };
+                const requestBody = { from: previousState.from, to: previousState.to, 
+                    room: number, type: type, guest: previousState.token };
                 const response = await axios.post('http://localhost:8080/api/reservation/reserve', requestBody);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -164,7 +179,8 @@ function ChooseRoom() {
     const handleDoneChooseRoom = function () {
         const fetchData = async () => {
             try {
-                const response = await axios.post(`http://localhost:8080/api/reservation/doneChooseRoom`, previousState.token);
+                const response = await axios.post(`http://localhost:8080/api/reservation/doneChooseRoom`, {
+                    guest: previousState.token, numberOfPeople: previousState.adults});
                 console.log(response.data);
                 if (response.data === null) {
                     toast.error("Reservation no longer exist please check again!");
@@ -248,7 +264,7 @@ function ChooseRoom() {
                         </Button>
                     </div>
                     <div>When you choose rooms, we will keep those rooms
-                        for you for six hours if you don't deposit</div>
+                        for you for one hours if you don't deposit</div>
                 </div>
             </div>
             <StyledDrawer

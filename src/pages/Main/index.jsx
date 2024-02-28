@@ -20,7 +20,7 @@ function Main() {
     const [room, setRoom] = useState(1)
     const navigate = useNavigate()
 
-    useEffect(()=>{
+    useEffect(() => {
         const resetReservation = async () => {
             try {
                 setTimeout(async () => {
@@ -32,7 +32,7 @@ function Main() {
             }
         };
         resetReservation()
-    },[])
+    }, [])
 
 
     // Prevent the Propagation from child to parent 
@@ -79,7 +79,10 @@ function Main() {
 
     // Adults changing
     const HandleAdultMinus = function () {
-        if (adults > 1) { setAdult(adults - 1) }
+        if (adults > 1) {
+            setAdult(adults - 1)
+            if (adults - 1 < room) setRoom(room - 1)
+        }
     }
 
     const HandleAdultPlus = function () {
@@ -101,7 +104,10 @@ function Main() {
     }
 
     const HandleRoomPlus = function () {
-        if (room < 30) { setRoom(room + 1) }
+        if (room < 30) {
+            setRoom(room + 1)
+            if (room + 1 > adults) setAdult(adults + 1)
+        }
     }
 
     const HandleDoneButton = function () {
@@ -117,13 +123,14 @@ function Main() {
         }
         const fetchData = async () => {
             try {
-                const response = await axios.post(`http://localhost:8080/api/reservation/chooseRoom`, {from: date.checkInDate, to:date.checkOutDate});
+                const response = await axios.post(`http://localhost:8080/api/reservation/chooseRoom`, { from: date.checkInDate, to: date.checkOutDate });
                 console.log(response.data);
                 navigate('/chooseRoom', {
                     state: {
                         token: response.data,
                         from: date.checkInDate,
                         to: date.checkOutDate,
+                        room: room,
                         adults: adults
                     }
                 }) //Pass date through the component to fetch rooms

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLanguage, faPowerOff, faQuestionCircle, faTicket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import Logo from '../../../assets/images/logo.jpg';
+import Logo from '../../../assets/images/logo.png';
 
 
 function Header(){
@@ -32,7 +32,7 @@ function Header(){
                         <div className={style.navItem}>English<FontAwesomeIcon className={style.ml5} icon={faLanguage}/></div>
                     </div>
                     <div className={style.navItemWrapper}>
-                        <div className={style.navItem}>My Reservation<FontAwesomeIcon  className={style.ml5} icon={faTicket}/></div>
+                        <Link to={"/findReservation"}><div className={style.navItem}>My Reservation<FontAwesomeIcon  className={style.ml5} icon={faTicket}/></div></Link>
                     </div>
                     {!token && 
                     <div className={style.navItemWrapper}>

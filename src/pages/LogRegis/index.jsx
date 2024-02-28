@@ -227,7 +227,7 @@ function Register() {
                             className={style.formControl}
                             error={!(helperText.password === '')}
                             id="outlined-error-helper-text"
-                            label="Confirm your password"
+                            label="Enter your password"
                             helperText={helperText.password}
                             variant="outlined"
                             name='password'
@@ -241,7 +241,7 @@ function Register() {
                             className={style.formControl}
                             error={!(helperText.confirmPassword === '')}
                             id="outlined-error-helper-text"
-                            label="Enter your password"
+                            label="Confirm your password"
                             helperText={helperText.confirmPassword}
                             variant="outlined"
                             name='confirmPassword'

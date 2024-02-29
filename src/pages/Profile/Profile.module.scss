@@ -1,0 +1,16 @@
+.container {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    position: relative;
+
+    .sideBar{
+        width: 30%;
+        margin-right: 20px;
+    }
+
+    .content{
+        width: 70%;
+    }
+    
+}

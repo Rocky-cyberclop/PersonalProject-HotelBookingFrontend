@@ -1,82 +1,119 @@
-a{
+a {
     text-decoration: none;
     color: aliceblue;
 }
 
-.mr5{
+.mr5 {
     margin-right: 5px;
 }
 
-.ml5{
+.ml5 {
     margin-left: 5px;
 }
 
-.container{
+.container {
     width: 100%;
     position: sticky;
     background-color: #8B4513;
     color: aliceblue;
-    min-height: 50px;
+    min-height: 60px;
     display: flex;
     z-index: 2;
 
-    .header{
+    .header {
         width: 80%;
         margin: 0 auto;
         display: flex;
         align-items: center;
+        justify-content: space-between;
 
-        .logo{
-            width: 55%;
+        .logo {
 
-            h1{
+            h1 {
                 width: fit-content;
             }
         }
 
         .nav {
-            width: 45%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-      
+
             .navItemWrapper {
                 display: flex;
+                position: relative;
                 justify-content: center;
-                .navItem{
+
+                .navItem {
                     display: flex;
                     justify-content: center;
+                    align-items: center;
                     margin: 0 10px;
                     padding: 10px;
                     border-radius: 10px;
                     cursor: pointer;
 
-                    &:hover{
+                    &:hover {
                         background-color: #8f6344;
+                    }
+
+                    .user {
+                        border-radius: 50%;
+                        border: 1px solid yellow;
+                        margin-right: 10px;
+                    }
+
+                    .menu {
+                        width: 100px;
+                    }
+                }
+
+                .menu {
+                    width: 200px;
+                    display: block;
+                    background-color: aliceblue;
+                    color: black;
+                    position: absolute;
+                    top: 110%;
+                    left: 60%;
+                    border-radius: 10px;
+
+                    li {
+                        padding: 20px;
+                        border-radius: 10px;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: beige;
+                        }
+
+                        .menuIcon{
+                            margin-right: 10px;
+                        }
                     }
                 }
             }
 
-            .nav5{
+            .nav5 {
                 width: 50%;
             }
 
-            .nav4{
+            .nav4 {
                 width: 40%;
             }
 
-            .nav3{
+            .nav3 {
                 width: 30%;
             }
 
-            .nav2{
+            .nav2 {
                 width: 20%;
             }
 
-            .nav1{
+            .nav1 {
                 width: 10%;
             }
-      
+
             // Add more navigation-related styles if necessary
         }
     }

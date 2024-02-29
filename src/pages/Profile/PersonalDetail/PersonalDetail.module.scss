@@ -1,0 +1,51 @@
+.container {
+    width: 100%;
+    display: block;
+
+    .header {
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgb(219, 219, 219);
+
+        .bold {
+            font-size: xx-large;
+            font-weight: bolder;
+        }
+
+        .normal {
+            color: rgb(75, 75, 75);
+        }
+    }
+
+    .body {
+        width: 100%;
+        margin-top: 20px;
+
+        .formElement {
+            margin: 10px 0;
+        }
+
+        .dateAndGener {
+            display: flex;
+            justify-content: space-evenly;
+        }
+    }
+
+    .footer {
+        display: flex;
+
+        button {
+            padding: 10px 20px;
+            margin-right: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            background-color: #8B4513;
+            color: aliceblue;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #8f6344;
+            }
+        }
+    }
+}

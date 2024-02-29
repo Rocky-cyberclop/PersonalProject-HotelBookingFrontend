@@ -5,55 +5,73 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function Login() {
 
+    const navigate = useNavigate();
     const emailRegex = /\S+@\S+\.\S+/;
     const [user, setUser] = useState({ email: '', password: '' })
     const [helperTextEmail, setHelperTextEmail] = useState('')
     const [helperTextPassword, setHelperTextPassword] = useState('')
-    const [valid, setValid] = useState(false)
+    const [valid, setValid] = useState({ email: false, password: false })
 
     const HandleInputChange = (event) => {
         const { name, value } = event.target;
         setUser((pre) => ({ ...pre, [name]: value }))
+        setHelperTextEmail('')
+        setHelperTextPassword('')
     }
 
     const HandleValidEmail = () => {
         if (user.email === '') {
             setHelperTextEmail('Email can not be blank')
-            setValid(false)
+            setValid(pre => ({ ...pre, email: false }))
+            return;
         }
         else if (!emailRegex.test(user.email)) {
             setHelperTextEmail('Email is not in right format')
-            setValid(false)
+            setValid(pre => ({ ...pre, email: false }))
         }
         else {
             setHelperTextEmail('')
-            if (!user.password == '') setValid(true)
+            setValid(pre => ({ ...pre, email: true }))
         }
     }
 
     const HandleValidPassword = () => {
         if (user.password === '') {
             setHelperTextPassword('Password can not be blank')
-            setValid(false)
+            setValid(pre => ({ ...pre, password: false }))
         }
         else {
             setHelperTextPassword('')
-            if (!user.email == '' && helperTextEmail == '') setValid(true)
+            setValid(pre => ({ ...pre, password: true }))
         }
-        console.log(valid)
     }
 
     const HandleSubmit = () => {
-        fetch('http://localhost:8080/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-        }).catch(err => { console.log(err); });
+        HandleValidEmail()
+        HandleValidPassword()
+        const login = async () => {
+            try {
+                const response = await axios.post(`http://localhost:8080/api/auth/login`, user);
+                if (response.data !== null) {
+                    localStorage.setItem('token', response.data);
+                    navigate('/')
+                }
+            } catch (error) {
+                toast.info("Email or password are not correct!")
+            }
+        }
+        setValid(pre => {
+            if (pre.email === true && pre.password === true) {
+                login()
+            }
+            return pre
+        })
     }
 
     return (
@@ -65,21 +83,20 @@ function Login() {
                         <TextField
                             className={style.formControl}
                             error={!(helperTextEmail === '')}
-                            id="outlined-error-helper-text"
+                            id="outlined-error-helper-text-1"
                             label="Enter your email address"
                             variant="outlined"
                             helperText={helperTextEmail}
                             name='email'
                             value={user.email}
                             onChange={HandleInputChange}
-                            onBlur={HandleValidEmail}
                         />
                     </div>
                     <div>
                         <TextField
                             className={style.formControl}
                             error={!(helperTextPassword === '')}
-                            id="outlined-error-helper-text"
+                            id="outlined-error-helper-text-2"
                             label="Enter your password"
                             helperText={helperTextPassword}
                             variant="outlined"
@@ -87,7 +104,6 @@ function Login() {
                             type='password'
                             value={user.password}
                             onChange={HandleInputChange}
-                            onBlur={HandleValidPassword}
                         />
                     </div>
                     <div>
@@ -124,6 +140,7 @@ function Login() {
 
 function Register() {
 
+    const navigate = useNavigate()
     const emailRegex = /\S+@\S+\.\S+/;
     const [user, setUser] = useState({ email: '', password: '', confirmPassword: '' })
     const [helperText, setHelperText] = useState({ email: '', password: '', confirmPassword: '' })
@@ -132,76 +149,81 @@ function Register() {
     const HandleInputChange = (event) => {
         const { name, value } = event.target;
         setUser((pre) => {
-            if(name==='email'){
-                HandleValidEmail(value)
-            }
-            else if(name==='password'){
-                HandleValidPassword(value)
-            }
-            else{
-                HandleValidConfirmPassword(value)
-            }
             return ({ ...pre, [name]: value });
         })
+        setHelperText((pre) => ({ ...pre, email: '' }))
+        setHelperText((pre) => ({ ...pre, password: '' }))
+        setHelperText((pre) => ({ ...pre, confirmPassword: '' }))
     }
 
-    const HandleValidEmail = (value) => {
-        if (value === '') {
+    const HandleValidEmail = () => {
+        if (user.email === '') {
             setHelperText((pre) => ({ ...pre, email: 'Email can not be blank' }))
             setValidInput((pre) => ({ ...pre, email: false }))
+            return;
         }
-        else if (!emailRegex.test(value)) {
+        else if (!emailRegex.test(user.email)) {
             setHelperText((pre) => ({ ...pre, email: 'Email is not in right format' }))
             setValidInput((pre) => ({ ...pre, email: false }))
+            return;
         }
-        else {
-            setHelperText((pre) => ({ ...pre, email: '' }))
-            setValidInput((pre) => ({ ...pre, email: true }))
-        }
+        setHelperText((pre) => ({ ...pre, email: '' }))
+        setValidInput((pre) => ({ ...pre, email: true }))
     }
 
-    const HandleValidPassword = (value) => {
-        if (value === '') {
+    const HandleValidPassword = () => {
+        if (user.password === '') {
             setHelperText((pre) => ({ ...pre, password: 'Password can not be blank' }))
             setValidInput((pre) => ({ ...pre, password: false }))
+            return;
         }
-        else if (value != user.confirmPassword) {
+        else if (user.password !== user.confirmPassword) {
             setHelperText((pre) => ({ ...pre, password: 'Password and confirm password does not match' }))
             setValidInput((pre) => ({ ...pre, password: false }))
+            return;
         }
         else {
             setHelperText((pre) => ({ ...pre, password: '' }))
             setValidInput((pre) => ({ ...pre, password: true }))
-            setHelperText((pre) => ({ ...pre, confirmPassword: '' }))
-            setValidInput((pre) => ({ ...pre, confirmPassword: true }))
         }
     }
 
-    const HandleValidConfirmPassword = (value) => {
-        if (value === '') {
+    const HandleValidConfirmPassword = () => {
+        if (user.confirmPassword === '') {
             setHelperText((pre) => ({ ...pre, confirmPassword: 'Confirm password can not be blank' }))
             setValidInput((pre) => ({ ...pre, confirmPassword: false }))
+            return;
         }
-        else if (user.password != value) {
+        else if (user.password !== user.password) {
             setHelperText((pre) => ({ ...pre, confirmPassword: 'Password and confirm password does not match' }))
             setValidInput((pre) => ({ ...pre, confirmPassword: false }))
+            return;
         }
         else {
-            setHelperText((pre) => ({ ...pre, password: '' }))
-            setValidInput((pre) => ({ ...pre, password: true }))
             setHelperText((pre) => ({ ...pre, confirmPassword: '' }))
             setValidInput((pre) => ({ ...pre, confirmPassword: true }))
         }
     }
 
     const HandleSubmit = () => {
-        fetch('http://localhost:8080/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-        }).catch(err => { console.log(err); });
+        HandleValidEmail()
+        HandleValidPassword()
+        HandleValidConfirmPassword()
+        const registry = async () => {
+            try {
+                const response = await axios.post(`http://localhost:8080/api/auth/register`, user);
+                if (response.data !== null) {
+                    toast.info("Registry successfully!")
+                    navigate('/login')
+                }
+            } catch (error) {
+                toast.info("This email is already existed!")
+            }
+        }
+        setValidInput(pre => {
+            if (pre.email === true && pre.password === true && pre.confirmPassword === true) registry()
+            return pre
+        })
     }
 
     return (
@@ -213,7 +235,7 @@ function Register() {
                         <TextField
                             className={style.formControl}
                             error={!(helperText.email === '')}
-                            id="outlined-error-helper-text"
+                            id="outlined-error-helper-text-1"
                             label="Enter your email address"
                             variant="outlined"
                             helperText={helperText.email}
@@ -226,7 +248,7 @@ function Register() {
                         <TextField
                             className={style.formControl}
                             error={!(helperText.password === '')}
-                            id="outlined-error-helper-text"
+                            id="outlined-error-helper-text-2"
                             label="Enter your password"
                             helperText={helperText.password}
                             variant="outlined"
@@ -240,7 +262,7 @@ function Register() {
                         <TextField
                             className={style.formControl}
                             error={!(helperText.confirmPassword === '')}
-                            id="outlined-error-helper-text"
+                            id="outlined-error-helper-text-3"
                             label="Confirm your password"
                             helperText={helperText.confirmPassword}
                             variant="outlined"
@@ -255,7 +277,6 @@ function Register() {
                             style={{ backgroundColor: '#8B4513' }}
                             variant="contained"
                             onClick={HandleSubmit}
-                            disabled={!(validInput.email&&validInput.password&&validInput)}
                         >
                             Sign up
                         </Button>

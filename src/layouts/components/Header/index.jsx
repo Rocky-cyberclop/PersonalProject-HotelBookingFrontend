@@ -8,6 +8,15 @@ import Guest from '../../../assets/images/guest.jpg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+var colors = [
+    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
+    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
+];
+
+function getAvatarColor() {
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
 
 function Header() {
     const [user, setUser] = useState({});
@@ -27,7 +36,11 @@ function Header() {
                         }
                     });
                     if (response.data !== null) {
-                        setUser({ email: response.data.name })
+                        if (response.data.name !== '') {
+                            setUser({ email: response.data.name })
+                        }
+                        else
+                            setUser({ email: response.data.email })
                     }
                 } catch (error) {
                     // console.log('You had to login to get email');
@@ -88,7 +101,10 @@ function Header() {
                         {!token && <Link to={"/login"}><div className={style.navItem}>Login</div></Link>}
                         {!token && <Link to={"/register"}><div className={style.navItem}>Register</div></Link>}
                         {token && <div className={style.navItem} ref={buttonMenuRef} onClick={HandleMenuAccount}>
-                            <img className={style.user} src={Guest} alt="" height={30} width={30} />{user && user.email}
+                            <div className={style.user} style={{ backgroundColor: getAvatarColor() }}>
+                                {user?.email?.split(' ').slice(-2).join(' ')[0]}
+                            </div>
+                            {user?.email?.split(' ').slice(-2).join(' ')}
                         </div>}
                         {menuAccount &&
                             <div className={style.menu} ref={menuRef}>

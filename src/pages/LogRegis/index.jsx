@@ -4,10 +4,11 @@ import { TextField, Button } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 function Login() {
 
@@ -17,6 +18,20 @@ function Login() {
     const [helperTextEmail, setHelperTextEmail] = useState('')
     const [helperTextPassword, setHelperTextPassword] = useState('')
     const [valid, setValid] = useState({ email: false, password: false })
+
+    useEffect(() => {
+        const resetReservation = async () => {
+            try {
+                setTimeout(async () => {
+                    const response = await axios.get('http://localhost:8080/api/auth/forget/doClean');
+                }, 1500);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return;
+            }
+        };
+        resetReservation()
+    }, [])
 
     const HandleInputChange = (event) => {
         const { name, value } = event.target;
@@ -60,6 +75,7 @@ function Login() {
                 const response = await axios.post(`http://localhost:8080/api/auth/login`, user);
                 if (response.data !== null) {
                     localStorage.setItem('token', response.data);
+                    toast.success('Login successfully!')
                     navigate('/')
                 }
             } catch (error) {
@@ -111,10 +127,13 @@ function Login() {
                             style={{ backgroundColor: '#8B4513' }}
                             variant="contained"
                             onClick={HandleSubmit}
-                            disabled={!valid}
+                        // disabled={!valid}
                         >
                             Login
                         </Button>
+                    </div>
+                    <div className={style.forget}>
+                        <Link to={'/forget'}>Forget your password?</Link>
                     </div>
                 </div>
                 <div className={style.formFooter}>Or login with</div>

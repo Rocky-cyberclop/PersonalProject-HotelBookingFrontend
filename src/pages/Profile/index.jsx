@@ -2,7 +2,8 @@ import style from './Profile.module.scss'
 import SideBar from './SideBar';
 import PersonalDetail from './PersonalDetail';
 import MyReservation from './MyReservation';
-import { useState,useEffect } from 'react';
+import ChangePassword from './ChangePassword';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Profile() {
@@ -33,6 +34,7 @@ function Profile() {
             <div className={style.content}>
                 {feature === 0 && <PersonalDetail />}
                 {feature === 1 && < MyReservation />}
+                {feature === 2 && < ChangePassword handleChangeFeature={handleChangeFeature} />}
 
             </div>
 

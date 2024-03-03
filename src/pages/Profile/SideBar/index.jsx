@@ -7,6 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+var colors = [
+    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
+    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
+];
+
+function getAvatarColor() {
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
 function SideBar({ handleChangeFeature }) {
     const [user, setUser] = useState({ name: '', email: '' });
     const navigate = useNavigate()
@@ -39,7 +48,12 @@ function SideBar({ handleChangeFeature }) {
     return (
         <div className={style.container}>
             <div className={style.header}>
-                <div className={style.picture}><img className={style.pictureSrc} src={Guest} width={50} alt="" /></div>
+                <div className={style.picture}>
+                    <div className={style.pictureSrc} style={{ backgroundColor: getAvatarColor() }}>
+                        {user?.name?.split(' ').slice(-2).join(' ')[0]
+                            || user?.email?.split(' ').slice(-2).join(' ')[0]}
+                    </div>
+                </div>
                 <div className={style.infor}>
                     <div className={style.name}>{user?.name?.split(' ').slice(-2).join(' ')}</div>
                     <div className={style.mail}>{user?.email}</div>
@@ -50,7 +64,7 @@ function SideBar({ handleChangeFeature }) {
                 <div className={style.element} onClick={() => handleChangeFeature(1)}><FontAwesomeIcon className={style.icon} icon={faRectangleList} />My booking</div>
             </div>
             <div className={style.footer}>
-                <div className={style.element}><FontAwesomeIcon className={style.icon} icon={faLockOpen} />Change password</div>
+                <div className={style.element} onClick={() => handleChangeFeature(2)}><FontAwesomeIcon className={style.icon} icon={faLockOpen} />Change password</div>
                 <div className={style.element} onClick={handleLogout}>
                     <FontAwesomeIcon className={style.icon} icon={faRightFromBracket} />Logout
                 </div>

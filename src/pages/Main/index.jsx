@@ -9,7 +9,31 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import Background from '../../assets/images/main_lobby.jpg'
+import { Button } from '@mui/material';
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
+import Comment from './Comment';
 
+import slide1 from '../../assets/images/slide1.jpeg'
+import slide2 from '../../assets/images/slide2.jpeg'
+import slide3 from '../../assets/images/slide3.jpeg'
+import slide4 from '../../assets/images/slide4.jpeg'
+import slide5 from '../../assets/images/slide5.jpeg'
+import slide6 from '../../assets/images/slide6.jpeg'
+import slide7 from '../../assets/images/slide7.jpeg'
+import slide8 from '../../assets/images/slide8.jpeg'
+import card1 from '../../assets/images/why1.webp'
+import card2 from '../../assets/images/why2.webp'
+import card3 from '../../assets/images/why3.webp'
+import logo from '../../assets/images/logo.png'
+
+const responsive = {
+    0: { items: 1 },
+    256: { items: 2 },
+    512: { items: 3 },
+    1024: { items: 4 },
+};
 
 function Main() {
     const [date, setDate] = useState(() => ({ checkInDate: 'null', checkOutDate: 'null' }))
@@ -142,8 +166,24 @@ function Main() {
         fetchData();
     }
 
+    const handleScrollTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const items = [
+        <div className={style.slide} onClick={handleScrollTop}> <div> <img className={style.item} src={slide1} /> <div className={style.name}>Hotels</div>            </div></div>,
+        <div className={style.slide} onClick={handleScrollTop}> <div><img className={style.item} src={slide2} /> <div className={style.name}>Apartments</div>         </div></div>,
+        <div className={style.slide} onClick={handleScrollTop}> <div><img className={style.item} src={slide3} /> <div className={style.name}>Resorts</div>            </div></div>,
+        <div className={style.slide} onClick={handleScrollTop}> <div><img className={style.item} src={slide4} /> <div className={style.name}>Villas</div>             </div></div>,
+        <div className={style.slide} onClick={handleScrollTop}> <div><img className={style.item} src={slide5} /> <div className={style.name}>Cabins</div>             </div></div>,
+        <div className={style.slide} onClick={handleScrollTop}> <div><img className={style.item} src={slide6} /> <div className={style.name}>Cottages</div>           </div></div>,
+        <div className={style.slide} onClick={handleScrollTop}> <div><img className={style.item} src={slide7} /> <div className={style.name}>Glamplings</div>         </div></div>,
+        <div className={style.slide} onClick={handleScrollTop}> <div><img className={style.item} src={slide8} /> <div className={style.name}>Service apartments</div> </div></div>
+    ];
+
     return (
-        <div className={style.mainBackground}>
+        <div className={style.container}>
+            <img className={style.mainBackground} src={Background} />
             <div className={style.content}>
                 <div className={style.inputBar}>
                     <div
@@ -211,8 +251,114 @@ function Main() {
                     >Choose room</div>
                 </div>
             </div>
+            <div className={style.offers}>
+                <div className={style.header}>
+                    <div className={style.title}>Offers</div>
+                    <div className={style.description}>Promotions, deals and special offers for you</div>
+                </div>
+                <div className={style.body}>
+                    <div>
+                        <div className={style.title}>
+                            New year, new adventures
+                        </div>
+                        <div className={style.description}>
+                            Save 15% or more when you book and stay before 1 April 2024
+                        </div>
+                    </div>
+                    <div className={style.button}>
+                        <Button style={{ backgroundColor: '#f28e47', color: 'aliceblue' }}
+                            onClick={handleScrollTop}>Find Early 2024 Deals</Button>
+                    </div>
+                </div>
+            </div>
+            <div className={style.propertyType}>
+                <div className={style.header}>
+                    Browse by property type
+                </div>
+                <div className={style.body}>
+                    <AliceCarousel
+                        mouseTracking
+                        items={items}
+                        responsive={responsive}
+                        controlsStrategy="alternate"
+                    />
 
-
+                </div>
+            </div>
+            <div className={style.why}>
+                <div className={style.header}>Why book with Rocky.hotels?</div>
+                <div className={style.body}>
+                    <div className={style.card}>
+                        <img src={card1} alt="" />
+                        <div className={style.description}>
+                            <div className={style.title}>One place for all your needs</div>
+                            <div className={style.content}>From flights, stays, to sights, just count on our <br />complete products and Travel Guides.</div>
+                        </div>
+                    </div>
+                    <div className={style.card}>
+                        <img src={card2} alt="" />
+                        <div className={style.description}>
+                            <div className={style.title}>Flexible booking options</div>
+                            <div className={style.content}>Sudden change of plan? No worries!<br /> Reschedule or Refund without hassle.</div>
+                        </div>
+                    </div>
+                    <div className={style.card}>
+                        <img src={card3} alt="" />
+                        <div className={style.description}>
+                            <div className={style.title}>Secure & convenient payment</div>
+                            <div className={style.content}>Enjoy many secure ways to pay, <br />in the currency that's most convenient for you.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <Comment/>
+            <div className={style.footer}>
+                <div className={style.footerContainer}>
+                    <div className={style.logo}>
+                        <img src={logo} alt="" />
+                    </div>
+                    <div className={style.about}>
+                        <div className={`${style.item} ${style.title}`}>
+                            About Rocky
+                        </div>
+                        <div className={style.item}>How to Book</div>
+                        <div className={style.item}>Contact Us</div>
+                        <div className={style.item}>Help Center</div>
+                        <div className={style.item}>Careers</div>
+                        <div className={style.item}>About Us</div>
+                    </div>
+                    <div className={style.product}>
+                        <div className={`${style.item} ${style.title}`}>
+                            Products
+                        </div>
+                        <div className={style.item}>Villas</div>
+                        <div className={style.item}>Hotels</div>
+                        <div className={style.item}>Xperience</div>
+                        <div className={style.item}>Apartments</div>
+                        <div className={style.item}>Bus & Shuttle</div>
+                    </div>
+                    <div className={style.other}>
+                        <div className={`${style.item} ${style.title}`}>
+                            Other
+                        </div>
+                        <div className={style.item}>Blog</div>
+                        <div className={style.item}>Privacy Notice</div>
+                        <div className={style.item}>Terms & Conditions</div>
+                        <div className={style.item}>Regulation for operation</div>
+                        <div className={style.item}>Register Your Experience Business</div>
+                    </div>
+                </div>
+                <div className={style.address}>
+                    <div>
+                        <div className={style.title}>
+                            Rocky Vietnam Co., Ltd. Enterprise Reg.: 0355669359. Can Tho University, 3/2, Ward Xuan Khanh, Ninh Kieu District, Can Tho City
+                        </div>
+                        <div className={style.content}>
+                            Copyright © 2024 Rocky. All rights reserved
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

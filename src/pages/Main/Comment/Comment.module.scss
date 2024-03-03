@@ -1,0 +1,85 @@
+.comment {
+    display: block;
+    width: 80%;
+    margin: 40px auto 0;
+
+    .header {
+        font-size: 25px;
+        font-weight: bolder;
+        margin: 20px 0 40px;
+    }
+
+    .body {
+        display: flex;
+        min-height: 200px;
+
+        .comments {
+            width: 60%;
+            // box-shadow: inset 2px 2px 2px -2px rgba(0, 0, 0, 1), inset -2px -2px 2px -2px rgba(0, 0, 0, 1);
+            // border-radius: 10px;
+            margin-right: 10px;
+
+            .item {
+                display: flex;
+                width: fit-content;
+                margin: 10px;
+                padding: 10px;
+                border: 1px solid rgb(200, 198, 198);
+                border-radius: 10px;
+
+                .avatar {
+                    display: inline-block;
+                    height: fit-content;
+                    padding: 10px;
+                    background-color: aqua;
+                    color: aliceblue;
+                    border-radius: 50%;
+                    margin-right: 5px;
+                    text-transform: uppercase;
+                }
+
+                .name {
+                    font-size: medium;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+
+                .content {
+                    font-size: medium;
+                }
+            }
+
+            .loadMore {
+                text-align: right;
+
+                .loadMoreBtn {
+                    background-color: #e47e35;
+                    cursor: pointer;
+                    color: aliceblue;
+
+                    &:hover {
+                        background-color: #f28e47;
+                    }
+                }
+            }
+        }
+
+        .writeComment {
+            width: 40%;
+
+            .writeCommentBtn {
+                float: right;
+                margin-top: 10px;
+                background-color: #e47e35;
+                cursor: pointer;
+                color: aliceblue;
+
+                &:hover {
+                    background-color: #f28e47;
+                }
+            }
+        }
+
+
+    }
+}

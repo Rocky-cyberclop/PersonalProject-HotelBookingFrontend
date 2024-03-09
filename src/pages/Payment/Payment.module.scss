@@ -1,0 +1,52 @@
+.container {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    position: relative;
+
+    .totalValue {
+        width: 22%;
+        border: 1px solid rgb(206, 206, 206);
+        border-radius: 10px;
+        padding: 10px;
+        margin: 5px;
+        position: relative;
+
+        .header {
+            font-size: larger;
+            font-weight: bold;
+            margin: 20px 0;
+            .times, .totalDays{
+                margin: 10px 0;
+                font-size: medium;
+                font-weight: lighter;
+            }
+        }
+
+        .body {
+
+            .prices,
+            .tax {
+                margin: 10px 0;
+            }
+
+            .listRooms {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+        }
+
+        .footer {
+            bottom: 1%;
+            position: absolute;
+
+            .deposit {
+                margin: 10px 0;
+            }
+        }
+
+    }
+
+    
+}

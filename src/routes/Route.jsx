@@ -9,6 +9,7 @@ import FillInfo from "../pages/FillInfo";
 import FindReservation from "../pages/FindReservation";
 import Profile from "../pages/Profile";
 import Forget from "../pages/Forget";
+import Payment from "../pages/Payment";
 
 
 const publicRoute = [
@@ -17,6 +18,7 @@ const publicRoute = [
     { path: '/login', page: Login, layout: MainLayout },
     { path: '/register', page: Register, layout: MainLayout },
     { path: '/fillInfo', page: FillInfo, layout: MainLayout },
+    { path: '/payment', page: Payment, layout: MainLayout },
     { path: '/chooseRoom', page: ChooseRoom, layout: MainLayout },
     { path: '/findReservation', page: FindReservation, layout: MainLayout }
 ]

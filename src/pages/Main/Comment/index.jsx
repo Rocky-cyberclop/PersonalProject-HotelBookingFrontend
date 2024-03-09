@@ -74,8 +74,10 @@ function Comment() {
                             'Authorization': `Bearer ${token}`
                         }
                     });
-                toast.success("Thanks for your review!")
-                setContent('')
+                if (response.data !== null) {
+                    toast.success("Thanks for your review!")
+                    setContent('')
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
                 return;
@@ -91,8 +93,8 @@ function Comment() {
             <div className={style.body}>
                 <div className={style.comments}>
                     {comments &&
-                        comments.map((comment => (
-                            <div className={style.item}>
+                        comments.map(((comment, index) => (
+                            <div className={style.item} key={index}>
                                 <div className={style.avatar} style={{ backgroundColor: comment.color }}>{
                                     comment?.name?.split(' ').slice(-2).join(' ')[0]
                                 }</div>

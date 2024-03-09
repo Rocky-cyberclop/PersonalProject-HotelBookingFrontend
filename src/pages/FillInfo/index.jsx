@@ -11,7 +11,7 @@ import axios from 'axios';
 function FillInfo() {
 
     const location = useLocation();
-    const infoReserve = location.state; //let is just for testing must be reset to const after tested
+    const infoReserve = location.state;
     const navigate = useNavigate();
     useEffect(() => {
         if (!infoReserve) {
@@ -123,7 +123,12 @@ function FillInfo() {
                         const response = await axios.post(`http://localhost:8080/api/reservation/${infoReserve.reservation}`,
                             [adult, ...adults]);
                         if (response.data !== null)
-                            console.log(response.data);
+                            navigate('/payment', {
+                                state: {
+                                    reservation: response.data,
+                                    total: reservation.total
+                                }
+                            })
                     } catch (error) {
                         console.error('Error fetching data:', error);
                     }

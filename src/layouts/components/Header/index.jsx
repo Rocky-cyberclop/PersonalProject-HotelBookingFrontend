@@ -42,6 +42,9 @@ function Header() {
                         else
                             setUser({ email: response.data.email })
                     }
+                    setUser(pre => (
+                        { ...pre, color: getAvatarColor() }
+                    ))
                 } catch (error) {
                     // console.log('You had to login to get email');
                 }
@@ -101,7 +104,7 @@ function Header() {
                         {!token && <Link to={"/login"}><div className={style.navItem}>Login</div></Link>}
                         {!token && <Link to={"/register"}><div className={style.navItem}>Register</div></Link>}
                         {token && <div className={style.navItem} ref={buttonMenuRef} onClick={HandleMenuAccount}>
-                            <div className={style.user} style={{ backgroundColor: getAvatarColor() }}>
+                            <div className={style.user} style={{ backgroundColor: user.color }}>
                                 {user?.email?.split(' ').slice(-2).join(' ')[0]}
                             </div>
                             {user?.email?.split(' ').slice(-2).join(' ')}

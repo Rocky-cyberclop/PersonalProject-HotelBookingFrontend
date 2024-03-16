@@ -32,6 +32,9 @@ function SideBar({ handleChangeFeature }) {
                     if (response.data !== null) {
                         setUser(response.data)
                     }
+                    setUser(pre => ({
+                        ...pre, color: getAvatarColor()
+                    }))
                 } catch (error) {
                     // console.log('You had to login to get email');
                 }
@@ -49,7 +52,7 @@ function SideBar({ handleChangeFeature }) {
         <div className={style.container}>
             <div className={style.header}>
                 <div className={style.picture}>
-                    <div className={style.pictureSrc} style={{ backgroundColor: getAvatarColor() }}>
+                    <div className={style.pictureSrc} style={{ backgroundColor: user.color }}>
                         {user?.name?.split(' ').slice(-2).join(' ')[0]
                             || user?.email?.split(' ').slice(-2).join(' ')[0]}
                     </div>

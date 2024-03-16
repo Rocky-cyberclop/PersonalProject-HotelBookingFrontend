@@ -1,52 +1,439 @@
-.container {
-    width: 80%;
-    margin: 20px auto;
-    display: flex;
-    position: relative;
+.parent {
+    width: 100%;
 
-    .totalValue {
-        width: 22%;
-        border: 1px solid rgb(206, 206, 206);
-        border-radius: 10px;
-        padding: 10px;
-        margin: 5px;
+    .container {
+        width: 80%;
+        margin: 20px auto;
+        display: flex;
         position: relative;
 
-        .header {
-            font-size: larger;
-            font-weight: bold;
-            margin: 20px 0;
-            .times, .totalDays{
-                margin: 10px 0;
-                font-size: medium;
-                font-weight: lighter;
+        .totalValue {
+            width: 30%;
+            height: fit-content;
+
+            .advertisement {
+                padding: 15px;
+                border: 1px solid rgb(206, 206, 206);
+                border-radius: 10px;
+                margin: 0 10px 10px 0;
+
+                .rating {
+                    display: flex;
+                    align-items: center;
+
+                    .stars,
+                    .like {
+                        font-size: 12px;
+                        margin-left: 10px;
+                    }
+
+                    .stars {
+                        .icon {
+                            color: rgb(255, 210, 64);
+                        }
+                    }
+
+                    .like {
+                        color: aliceblue;
+                        background-color: rgb(255, 210, 64);
+                        padding: 5px;
+                        border-radius: 2px;
+                    }
+                }
+
+                .name {
+                    font-size: 20px;
+                    font-weight: bolder;
+                    margin: 10px 0;
+                }
+
+                .address {
+                    margin: 10px 0;
+                }
+
+                .slogan {
+                    display: flex;
+                    align-items: center;
+
+                    .score,
+                    .wifi,
+                    .compliment,
+                    .parking {
+                        margin-right: 10px;
+
+                    }
+
+                    .score {
+                        padding: 10px;
+                        color: aliceblue;
+                        background-color: rgb(9, 9, 157);
+                        border-radius: 10px 10px 10px 0;
+                    }
+                }
+            }
+
+            .bookingDetail {
+                padding: 20px;
+                border: 1px solid rgb(206, 206, 206);
+                border-radius: 10px;
+                margin-right: 10px;
+
+                .header {
+                    font-weight: bolder;
+                    font-size: larger;
+                    margin-bottom: 10px;
+                }
+
+                .check {
+                    display: flex;
+                    width: 100%;
+                    padding: 20px 0 20px 0;
+
+                    >div {
+                        width: 50%;
+                        position: relative;
+                        margin: 5px 0;
+                    }
+
+                    .title {
+                        font-size: large;
+                    }
+
+                    .date {
+                        font-size: large;
+                        font-weight: bold;
+                        margin: 10px 0;
+                    }
+
+                    .time {
+                        color: rgb(95, 95, 95);
+                    }
+
+                    .checkIn {
+                        margin-right: 10px;
+                    }
+
+                    .checkIn::after {
+                        display: block;
+                        content: '';
+                        position: absolute;
+                        left: 100%;
+                        top: 40%;
+                        width: 1px;
+                        height: 60%;
+                        background-color: rgb(196, 196, 196);
+                    }
+                }
+
+                .warning {
+                    font-size: 20px;
+                    margin-bottom: 10px;
+
+                    .icon {
+                        margin-right: 10px;
+                    }
+                }
+
+                .near {
+                    color: rgb(164, 16, 16);
+                }
+
+                .days {
+                    .totalDays {
+                        margin: 5px 0;
+                        font-weight: bolder;
+                    }
+                }
+
+            }
+
+            .priceSumary {
+                border: 1px solid rgb(206, 206, 206);
+                border-radius: 10px;
+                margin: 10px 10px 10px 0;
+
+                .header {
+                    .title {
+                        padding: 20px 15px;
+                        font-size: larger;
+                        font-weight: bolder;
+                    }
+
+                    .content {
+                        display: flex;
+                        background-color: rgb(233, 243, 252);
+                        justify-content: space-between;
+
+                        >div {
+                            display: block;
+                            padding: 30px 15px;
+                            font-size: 25px;
+                            font-weight: bolder;
+
+                            .description {
+                                font-size: medium;
+                                font-weight: 100;
+                                color: gray;
+                                float: right;
+                            }
+
+                            .total {
+                                float: right;
+                            }
+
+                        }
+                    }
+                }
+
+                .body {
+                    padding: 15px;
+
+                    .title {
+                        font-size: larger;
+                        font-weight: bolder;
+                        margin-bottom: 20px;
+                    }
+
+                    .item {
+                        display: flex;
+                        margin: 10px 0;
+
+                        .icon {
+                            width: 20px;
+                            margin-right: 10px;
+                        }
+
+                        &:last-child {
+                            padding-bottom: 20px;
+                            border-bottom: 1px solid rgb(214, 214, 214);
+                        }
+                    }
+                }
+
+                .footer {
+                    padding: 15px;
+
+                    .title {
+                        font-size: larger;
+                        font-weight: bolder;
+                        margin-bottom: 20px;
+                    }
+
+                    .icon {
+                        width: 20px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            .paymentSchedule {
+                border: 1px solid rgb(206, 206, 206);
+                border-radius: 10px;
+                margin: 10px 10px 10px 0;
+                padding: 15px;
+
+                .title {
+                    font-size: larger;
+                    font-weight: bolder;
+                    margin-bottom: 20px;
+                }
+
+                .description {
+                    font-size: 15px;
+                    color: green;
+                }
+            }
+
+            .cancelCost {
+                border: 1px solid rgb(206, 206, 206);
+                border-radius: 10px;
+                margin: 10px 10px 10px 0;
+                padding: 15px;
+
+                .title {
+                    font-size: larger;
+                    font-weight: bolder;
+                    margin-bottom: 20px;
+                }
+
+                .body {
+                    color: green;
+                    margin: 10px 0;
+                }
+
+                .price {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+
+        }
+
+        .info {
+            width: 65%;
+            margin-left: 10px;
+
+            .content {
+                border: 1px solid rgb(202, 202, 202);
+                border-radius: 10px;
+                padding: 20px;
+
+                .header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .title {
+                        font-size: 20px;
+                        font-weight: bolder;
+                    }
+
+                    .nocard {
+                        .icon {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+
+                .guarantee {
+                    background-color: rgb(165, 214, 251);
+                    padding: 20px;
+                    margin: 10px 0;
+
+                    .icon {
+                        margin-right: 10px;
+                    }
+                }
+
+                .inputs {
+                    display: block;
+                    width: 100%;
+
+                    .formControl {
+                        width: 60%;
+                        margin: 10px 0;
+                    }
+                }
+
+                .body {
+                    .title {
+                        margin: 20px 0;
+                    }
+
+                    .icons {
+
+                        .amex,
+                        .masterCard,
+                        .discover {
+                            font-size: 30px;
+                            margin: 0 10px;
+                        }
+
+                        .visa {
+                            font-size: 30px;
+                            color: rgb(78, 78, 196);
+                            margin-right: 10px;
+                        }
+
+                        .amex {
+                            color: blue;
+                        }
+
+                        .masterCard {
+                            color: red;
+                        }
+
+                        .discover {
+                            color: orange;
+                        }
+                    }
+                }
+
+            }
+
+            .footer {
+                .formCheckbox {
+                    padding: 20px;
+                    font-size: medium;
+                }
+
+                .confirm {
+                    div {
+                        display: inline-block;
+                    }
+
+                    .condition,
+                    .term {
+                        color: blue;
+                        text-decoration: underline;
+                        cursor: pointer;
+                        font-weight: bolder;
+                    }
+
+                    .policy {
+                        text-decoration: underline;
+                        cursor: pointer;
+                        font-weight: bolder;
+                    }
+                }
+            }
+
+            .payBtn {
+                margin-top: 20px;
+                width: 100%;
+
+                .btn {
+                    width: 300px;
+                    float: right;
+                }
             }
         }
 
-        .body {
-
-            .prices,
-            .tax {
-                margin: 10px 0;
-            }
-
-            .listRooms {
-                display: flex;
-                flex-wrap: wrap;
-            }
-
+        .modalHeader {
+            font-size: 10px;
+            font-weight: bolder;
         }
-
-        .footer {
-            bottom: 1%;
-            position: absolute;
-
-            .deposit {
-                margin: 10px 0;
-            }
-        }
-
     }
 
-    
+    .containerFooter {
+        width: 100%;
+        margin-top: 80px;
+        background-color: rgb(234, 234, 244);
+
+        .container {
+            width: 80%;
+            margin: auto;
+            display: block;
+            position: relative;
+
+            .wrapper {
+                padding: 40px 0;
+                display: flex;
+
+                .footerWrapperItem {
+                    position: relative;
+                    padding-right: 5px;
+                    margin-right: 5px;
+                    font-weight: bolder;
+                    color: rgb(1, 1, 213);
+                    cursor: pointer;
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 2px;
+                        height: 100%;
+                        left: 100%;
+                        background-color: gray;
+
+                    }
+                }
+            }
+
+            .copyRight{
+                padding-bottom: 20px;
+                font-size: 13px;
+            }
+        }
+    }
 }

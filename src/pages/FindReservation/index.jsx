@@ -49,14 +49,18 @@ function FindReservation() {
         const submit = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/api/reservation/${formData.id}`);
-                if (response.data !== null){
+                if (response.data !== null) {
+                    if (response.data === '') {
+                        toast.error("Your reservation is expired!")
+                        return
+                    }
                     navigate('/fillInfo', {
                         state: {
                             reservation: response.data.id,
                             adults: parseInt(response.data.adults)
                         }
                     })
-                    
+
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);

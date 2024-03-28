@@ -100,7 +100,7 @@ function FindReservation() {
                     </div>
                     <div className={style.formElement}>
                         <Button
-                            style={{ backgroundColor: '#8B4513' }}
+                            style={{ backgroundColor: '#195bbe' }}
                             variant="contained"
                             onClick={handleSubmit}
                         >

@@ -53,12 +53,12 @@
                 text-align: right;
 
                 .loadMoreBtn {
-                    background-color: #e47e35;
+                    background-color: #195bbe;
                     cursor: pointer;
                     color: aliceblue;
 
                     &:hover {
-                        background-color: #f28e47;
+                        background-color: #2972e0;
                     }
                 }
             }
@@ -70,12 +70,12 @@
             .writeCommentBtn {
                 float: right;
                 margin-top: 10px;
-                background-color: #e47e35;
+                background-color: #195bbe;
                 cursor: pointer;
                 color: aliceblue;
 
                 &:hover {
-                    background-color: #f28e47;
+                    background-color: #3b7fe5;
                 }
             }
         }

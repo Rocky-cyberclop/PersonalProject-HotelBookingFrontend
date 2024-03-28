@@ -124,7 +124,7 @@ function Login() {
                     </div>
                     <div>
                         <Button className={`${style.formControl}`}
-                            style={{ backgroundColor: '#8B4513' }}
+                            style={{ backgroundColor: '#195bbe' }}
                             variant="contained"
                             onClick={HandleSubmit}
                         // disabled={!valid}
@@ -293,7 +293,7 @@ function Register() {
                     </div>
                     <div>
                         <Button className={`${style.formControl}`}
-                            style={{ backgroundColor: '#8B4513' }}
+                            style={{ backgroundColor: '#195bbe' }}
                             variant="contained"
                             onClick={HandleSubmit}
                         >

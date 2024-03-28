@@ -193,6 +193,7 @@ function FillInfo() {
 
     function formatDate(inputDate) {
         const date = new Date(inputDate);
+        date.setDate(date.getDate() + 1)
 
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -232,7 +233,6 @@ function FillInfo() {
 
     function formatDateShort(inputDate) {
         const date = new Date(inputDate);
-        date.setDate(date.getDate() - 1);
         const day = date.getDate();
         const month = date.toLocaleString('default', { month: 'short' });
         return `${day} ${month}`;
@@ -398,14 +398,14 @@ function FillInfo() {
                             </FormControl>
                             <div className={`${style.formControl} ${style.checkbox}`}>
                                 <Checkbox id='checkBoxPaperless' checked disableFocusRipple />
-                                <label for='checkBoxPaperless' className={style.checkboxExplain}>I'd like free paperless confirmation (recommended)</label>
+                                <label htmlFor='checkBoxPaperless' className={style.checkboxExplain}>I'd like free paperless confirmation (recommended)</label>
                             </div>
                         </div>
 
 
                     </div>
                     {adults.map((adult, index) => (
-                        <div className={style.guest}>
+                        <div className={style.guest} key={index}>
                             <div className={style.title}>Junior Suite For Guest</div>
                             <div className={style.adver}>
                                 <div className={style.breakfast}>
@@ -511,93 +511,6 @@ function FillInfo() {
                 </div>
             </div>
         </div>
-        // <div className={style.container}>
-        //     </div>
-        //     <div className={style.info}>
-        //         <div className={style.header}>
-        //             Your reservation code is: {(infoReserve && infoReserve.reservation) || 'some string'}
-        //             <div className={style.content}>
-        //                 You can complete the reserve progress now or later with this code in the My reservation function on the navbar<br />
-        //                 We with hold your reservation for one hour from now<br />
-        //                 Or enter your email and complete this step we will send you the reservation code
-        //             </div>
-        //         </div>
-        //         <div className={style.body}>
-        //             <div className={style.customer}>
-        //                 <div className={style.customerHeader}>Your informations</div>
-        //                 <TextField
-        //                     className={style.formControl}
-        //                     error={!(helperText.name === '')}
-        //                     helperText={helperText.name}
-        //                     id="outlined-error-helper-text"
-        //                     variant="outlined"
-        //                     label="Full name"
-        //                     name='name'
-        //                     value={adult.name}
-        //                     onChange={(e) => handleAdultInputChange('name', e.target.value)}
-        //                 />
-        //                 <TextField
-        //                     className={style.formControl}
-        //                     error={!(helperText.phone === '')}
-        //                     helperText={helperText.phone}
-        //                     id="outlined-error-helper-text"
-        //                     variant="outlined"
-        //                     label="Phone number"
-        //                     name='phone'
-        //                     value={adult.phone}
-        //                     onChange={(e) => handleAdultInputChange('phone', e.target.value)}
-        //                 />
-        //                 <TextField
-        //                     className={style.formControl}
-        //                     error={!(helperText.email === '')}
-        //                     helperText={helperText.email}
-        //                     id="outlined-error-helper-text"
-        //                     variant="outlined"
-        //                     label="Email"
-        //                     name='email'
-        //                     value={adult.email}
-        //                     onChange={(e) => handleAdultInputChange('email', e.target.value)}
-        //                 />
-        //             </div>
-        //             <div className={style.guests}>
-        //                 <div className={style.guestHeader}>Your roomate's informations (Optional)</div>
-        //                 {adults.map((adult, index) => (
-        //                     <div key={index} className={style.guest}>
-        //                         <TextField
-        //                             className={style.formControl}
-        //                             id="outlined-error-helper-text"
-        //                             variant="outlined"
-        //                             label="Full name"
-        //                             name='name'
-        //                             value={adult.name}
-        //                             onChange={(e) => handleInputChange(index, 'name', e.target.value)}
-        //                         />
-        //                         <TextField
-        //                             className={style.formControl}
-        //                             id="outlined-error-helper-text"
-        //                             variant="outlined"
-        //                             label="Phone number"
-        //                             name='phone'
-        //                             value={adult.phone}
-        //                             onChange={(e) => handleInputChange(index, 'phone', e.target.value)}
-        //                         />
-        //                     </div>
-        //                 ))}
-        //             </div>
-        //         </div>
-        //         <div className={style.footer}>
-        //             <Button
-        //                 style={{ backgroundColor: '#8B4513' }}
-        //                 variant="contained"
-        //                 onClick={handleSubmit}
-        //                 disabled={reservation.paid === "true"}
-        //             >
-        //                 {((reservation.paid === "false") && "Final step: Deposit") || "Deposited"}
-        //             </Button>
-        //         </div>
-        //     </div>
-        // </div>
-
     )
 }
 

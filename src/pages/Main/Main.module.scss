@@ -20,6 +20,7 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   position: relative;
+  box-shadow: inset 60px 0 20px -10px rgba(0, 0, 0, 1), inset -60px 0 20px -10px rgba(0, 0, 0, 1);
   z-index: 0;
 }
 
@@ -132,11 +133,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #e47e35;
+      background-color: rgb(214, 214, 6);
       cursor: pointer;
 
       &:hover {
-        background-color: #f28e47;
+        background-color: yellow;
       }
     }
 
@@ -266,7 +267,7 @@
 .footer {
   min-height: 300px;
   margin-top: 50px;
-  background-color: #583013;
+  background-color: #123160;
 
   .footerContainer {
     display: flex;

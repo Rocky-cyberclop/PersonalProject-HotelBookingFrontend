@@ -14,7 +14,7 @@ a {
 .container {
     width: 100%;
     position: sticky;
-    background-color: #8B4513;
+    background-color: rgb(47, 89, 195);
     color: aliceblue;
     min-height: 60px;
     display: flex;
@@ -54,7 +54,7 @@ a {
                     cursor: pointer;
 
                     &:hover {
-                        background-color: #8f6344;
+                        background-color: #397fe7;
                     }
 
                     .user {

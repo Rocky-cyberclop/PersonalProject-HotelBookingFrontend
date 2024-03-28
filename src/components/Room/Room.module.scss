@@ -7,13 +7,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+
+    .icon {
+        margin: 0 5px;
+    }
+
+    &.booking {
+        background-color: greenyellow;
+    }
+
+    &.pending {
+        background-color: rgb(116, 116, 205);
+    }
+
 
     &.booked {
         background-color: rgb(168, 168, 167);
-        border: 0;
     }
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         border-color: orange;
     }
 

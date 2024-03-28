@@ -92,6 +92,7 @@ function Payment() {
 
     function formatDate(inputDate) {
         const date = new Date(inputDate);
+        date.setDate(date.getDate() + 1)
 
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -117,7 +118,6 @@ function Payment() {
 
     function formatDateShort(inputDate) {
         const date = new Date(inputDate);
-        date.setDate(date.getDate() - 1); 
         const day = date.getDate();
         const month = date.toLocaleString('default', { month: 'short' });
         return `${day} ${month}`;
@@ -215,7 +215,7 @@ function Payment() {
                     </div>
                     <div className={style.cancelCost}>
                         <div className={style.title}>How much will it cost to cancel?</div>
-                        <div className={style.body}>Free cancellation {formatDateShort(reservation.come)}</div>
+                        <div className={style.body}>Free cancellation until {formatDateShort(reservation.come)}</div>
                         <div className={style.price}>
                             <div>
                                 From 00:00 on {formatDateShort(reservation.come)}

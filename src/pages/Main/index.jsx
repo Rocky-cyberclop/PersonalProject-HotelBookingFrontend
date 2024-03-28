@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import Background from '../../assets/images/main_lobby.jpg'
+import Background from '../../assets/images/new_lobby.jpg'
 import { Button } from '@mui/material';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -266,7 +266,7 @@ function Main() {
                         </div>
                     </div>
                     <div className={style.button}>
-                        <Button style={{ backgroundColor: '#f28e47', color: 'aliceblue' }}
+                        <Button style={{ backgroundColor: '#195bbe', color: 'aliceblue' }}
                             onClick={handleScrollTop}>Find Early 2024 Deals</Button>
                     </div>
                 </div>

@@ -33,7 +33,7 @@ function ChooseRoom() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [room, setRoom] = useState({
         title: '', pictures: [], number: 0,
-        description: '', booked: false, price: 0
+        description: '', booked: 0, price: 0
     })
     const [reserveString, setReserveString] = useState('')
     const [infoReserve, setInfoReserve] = useState({
@@ -149,12 +149,14 @@ function ChooseRoom() {
 
     const sendMessage = (number = 0) => {
         let type = ''
-        if (reserveString === 'Reserve') type = 'RESERVE'
+        if (reserveString === 'Reserve') type = 'RESERVING'
         else type = 'UNRESERVED'
         const fetchData = async () => {
             try {
-                const requestBody = { from: previousState.from, to: previousState.to, 
-                    room: number, type: type, guest: previousState.token };
+                const requestBody = {
+                    from: previousState.from, to: previousState.to,
+                    room: number, type: type, guest: previousState.token
+                };
                 const response = await axios.post('http://localhost:8080/api/reservation/reserve', requestBody);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -180,7 +182,8 @@ function ChooseRoom() {
         const fetchData = async () => {
             try {
                 const response = await axios.post(`http://localhost:8080/api/reservation/doneChooseRoom`, {
-                    guest: previousState.token, numberOfPeople: previousState.adults});
+                    guest: previousState.token, numberOfPeople: previousState.adults
+                });
                 console.log(response.data);
                 if (response.data === null) {
                     toast.error("Reservation no longer exist please check again!");
@@ -206,27 +209,58 @@ function ChooseRoom() {
                 <div className={style.up} onClick={HandleUpFloor}><FontAwesomeIcon icon={faCaretUp} size='2xl' /></div>
                 <div className={style.down} onClick={HandleDownFloor}><FontAwesomeIcon icon={faCaretDown} size='2xl' /></div>
             </div>
+            <div className={style.instruction}>
+                <div className={style.youChoose}>
+                    <div className={style.color}></div>
+                    <div className={style.description}>You're choosing these rooms</div>
+                </div>
+                <div className={style.someoneChoosing}>
+                    <div className={style.color}></div>
+                    <div className={style.description}>Someone is choosing but hasn't paid yet</div>
+                </div>
+                <div className={style.booked}>
+                    <div className={style.color}></div>
+                    <div className={style.description}>Already booked</div>
+                </div>
+            </div>
             <div className={style.floor}>
-                {currentFloorIndex === 0 && <FirstFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}
-                    triggerBindingOnMessageReceive={triggerBindingOnMessageReceive} />}
-                {currentFloorIndex === 1 && <SecondFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}
-                    triggerBindingOnMessageReceive={triggerBindingOnMessageReceive} />}
-                {currentFloorIndex === 2 && <ThirdFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}
-                    triggerBindingOnMessageReceive={triggerBindingOnMessageReceive} />}
-                {currentFloorIndex === 3 && <ForthFloor toggleRoomInfo={toggleRoomInfo} reserveInfo={previousState}
-                    triggerBindingOnMessageReceive={triggerBindingOnMessageReceive} />}
+                {currentFloorIndex === 0 &&
+                    <FirstFloor
+                        toggleRoomInfo={toggleRoomInfo}
+                        reserveInfo={previousState}
+                        triggerBindingOnMessageReceive={triggerBindingOnMessageReceive}
+                        bookingRooms={infoReserve.rooms}
+                    />}
+                {currentFloorIndex === 1 &&
+                    <SecondFloor
+                        toggleRoomInfo={toggleRoomInfo}
+                        reserveInfo={previousState}
+                        triggerBindingOnMessageReceive={triggerBindingOnMessageReceive}
+                        bookingRooms={infoReserve.rooms}
+                    />}
+                {currentFloorIndex === 2 &&
+                    <ThirdFloor
+                        toggleRoomInfo={toggleRoomInfo}
+                        reserveInfo={previousState}
+                        triggerBindingOnMessageReceive={triggerBindingOnMessageReceive}
+                        bookingRooms={infoReserve.rooms}
+                    />}
+                {currentFloorIndex === 3 &&
+                    <ForthFloor
+                        toggleRoomInfo={toggleRoomInfo}
+                        reserveInfo={previousState}
+                        triggerBindingOnMessageReceive={triggerBindingOnMessageReceive}
+                        bookingRooms={infoReserve.rooms}
+                    />}
             </div>
             <div className={style.info}>
                 <div className={style.header}>Choose your rooms</div>
                 <div className={style.body}>
-                    <div>Rooms you have chosen:</div>
-                    <div className={style.listRooms}>
-                        {
-                            infoReserve.rooms.map((value, index) => (
-                                <div key={index} className={style.roomItem}>{value},</div>
-                            ))
-                        }
-                    </div>
+                    <div className={style.listRooms}>Rooms you have chosen:{
+                        infoReserve.rooms.map((value, index) => (
+                            <div key={index} className={style.roomItem}>{value},</div>
+                        ))
+                    }</div>
                     <div className={style.prices}>
                         <TextField
                             disabled
@@ -290,7 +324,7 @@ function ChooseRoom() {
 
                         <Button
                             className={style.reserve}
-                            disabled={room.booked}
+                            disabled={room.booked != 0}
                             variant='contained'
                             color='primary'
                             onClick={HandleReserve}

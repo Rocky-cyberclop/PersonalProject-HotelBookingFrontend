@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, auto);
-    gap: 10px;
+    gap: 10px 5px;
     padding: 15px;
     background-color: rgb(149, 149, 189);
     margin: 10px;
@@ -14,21 +14,44 @@
         justify-content: center;
         align-items: center;
         border-radius: 10px;
-        width:auto;
-
-        &.hasBorder {
-            border: 1px solid #000;
-        }
+        width: auto;
 
         &.large {
-            grid-column: span 4;
-            grid-row: span 6;
+            grid-column: span 6;
+            grid-row: span 7;
+        }
+
+        &.containerChild {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, auto);
+            background-color: rgb(149, 149, 189);
+            border-radius: 10px;
+            padding: 0;
+            gap: 10px 5px;
+            margin: 15px 15px 0 15px;
+
+            .itemChild {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+                width: auto;
+                height: 100%;
+
+                &.largeChild {
+                    grid-column: span 4;
+                    grid-row: span 6;
+
+                }
+            }
+
         }
     }
 
 }
 
-.floorTitle{
+.floorTitle {
     display: block;
     width: fit-content;
     padding: 10px;

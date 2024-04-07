@@ -147,37 +147,40 @@ function FirstFloor({ toggleRoomInfo, reserveInfo, triggerBindingOnMessageReceiv
                 <div className={style.item}><Room data={rooms[13]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[14]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[6]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[33]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[32]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[31]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[30]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[29]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[28]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                <div className={`${style.item} ${style.large} ${style.containerChild}`}>
+                    <div className={style.itemChild}><Room data={rooms[33]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[32]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[31]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[30]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[29]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[28]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[34]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={`${style.itemChild} ${style.largeChild}`}><Room data={null}/></div>
+                    <div className={style.itemChild}><Room data={rooms[27]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[35]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[26]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[36]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[25]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[37]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[24]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[38]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[23]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[39]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+                    <div className={style.itemChild}><Room data={rooms[22]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
+
+                </div>
                 <div className={style.item}><Room data={rooms[15]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[5]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[34]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={`${style.item} ${style.large}`}><Room data={null} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} /></div>
-                <div className={style.item}><Room data={rooms[27]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[16]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[4]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[35]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[26]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[17]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[3]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[36]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[25]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[18]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[2]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[37]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[24]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[19]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[1]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[38]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[23]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[20]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[0]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[39]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                <div className={style.item}><Room data={rooms[22]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                 <div className={style.item}><Room data={rooms[21]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
 
             </div>

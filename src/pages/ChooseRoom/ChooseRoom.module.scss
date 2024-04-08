@@ -26,13 +26,13 @@
         position: absolute;
         display: flex;
         justify-content: center;
-
         left: 15%;
 
         .youChoose,
         .someoneChoosing,
         .booked {
             display: flex;
+            flex-wrap: nowrap;
             margin-right: 10px;
 
             .color {
@@ -164,5 +164,11 @@
 
     .container .floor {
         width: 100%;
+    }
+
+    .container{
+        .instruction{
+            left: 18%;
+        }
     }
 }

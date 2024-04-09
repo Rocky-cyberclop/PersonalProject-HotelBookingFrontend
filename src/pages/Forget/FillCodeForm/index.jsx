@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-function FillCodeForm({ email }) {
+function FillCodeForm({ email, handleChangeFormPass }) {
     const [code, setCode] = useState('')
     const navigate = useNavigate();
 
@@ -23,17 +23,15 @@ function FillCodeForm({ email }) {
         }
         const fetchEmail = async () => {
             try {
-                const response = await axios.post(`http://localhost:8080/api/auth/forget/login`,
+                const response = await axios.post(`http://localhost:8080/api/auth/forget/authCode`,
                     {
                         email: email,
                         code: code
                     }
                 );
-                console.log(response)
                 if (response.data !== '') {
-                    localStorage.setItem('token', response.data)
-                    toast.success("Login successfully!")
-                    navigate('/');
+                    handleChangeFormPass()
+                    toast.success("Now fill your password!")
                 }
                 else
                     toast.info("Your code is expire or not correct!")
@@ -64,7 +62,6 @@ function FillCodeForm({ email }) {
                     </div>
                     <div>
                         <Button className={`${style.formControl}`}
-                            style={{ backgroundColor: '#8B4513' }}
                             variant="contained"
                             onClick={handleSend}
                         >

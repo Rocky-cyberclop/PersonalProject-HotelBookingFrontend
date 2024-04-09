@@ -1,17 +1,19 @@
-import style from './FillEmailForm.module.scss';
-import { TextField, Button } from '@mui/material';
+import style from './FillPassword.module.scss'
+import { Button, TextField } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-function FillEmailForm({ handleChangeForm, setEmailFromFillEmail }) {
-    const [email, setEmail] = useState('')
+function FillPassword({ email }) {
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
-        setEmail(e.target.value)
+        setPassword(e.target.value)
     }
 
     const handleSend = () => {
@@ -19,38 +21,42 @@ function FillEmailForm({ handleChangeForm, setEmailFromFillEmail }) {
             toast.error("Please fill out your email!")
             return;
         }
-        const fetchEmail = async () => {
+        const fetchPassword = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/auth/forget/sendCode/${email}`);
+                const response = await axios.post(`http://localhost:8080/api/auth/login`,
+                    {
+                        email: email,
+                        password: password
+                    }
+                );
                 console.log(response)
                 if (response.data !== '') {
-                    handleChangeForm()
-                    setEmailFromFillEmail(email)
-                    toast.success("Code sent to your email!")
+                    localStorage.setItem('token', response.data)
+                    toast.success("Login successfully!")
+                    navigate('/');
                 }
-                else
-                    toast.info("Your email is not exist!")
             } catch (error) {
                 console.error('Error fetching data:', error);
                 return;
             }
         };
-        fetchEmail();
+        fetchPassword();
     }
+
 
     return (
         <div className={style.container}>
             <div className={style.formLogin}>
-                <div className={style.formHeader}>Fill out your email</div>
+                <div className={style.formHeader}>Fill out your new password in your email</div>
                 <div className={style.formBody}>
                     <div>
                         <TextField
                             className={style.formControl}
                             id="outlined-error-helper-text-1"
-                            label="Enter your email address"
+                            label="Enter new password we provided in your email"
                             variant="outlined"
-                            name='email'
-                            value={email}
+                            name='password'
+                            value={password}
                             onChange={handleInputChange}
                         />
                     </div>
@@ -59,7 +65,7 @@ function FillEmailForm({ handleChangeForm, setEmailFromFillEmail }) {
                             variant="contained"
                             onClick={handleSend}
                         >
-                            Send code
+                            Login
                         </Button>
                     </div>
                 </div>
@@ -84,4 +90,4 @@ function FillEmailForm({ handleChangeForm, setEmailFromFillEmail }) {
     )
 }
 
-export default FillEmailForm;
+export default FillPassword;

@@ -21,23 +21,19 @@ function FirstFloor({ toggleRoomInfo, reserveInfo, triggerBindingOnMessageReceiv
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const roomResponse = axios.get('http://localhost:8080/api/room/floor/1');
-                const roomBookedResponse = axios.post(`http://localhost:8080/api/reservation/floor`, { guest: guest, from: from, to: to });
-
-                const [roomData, roomBookedData] = await Promise.all([roomResponse, roomBookedResponse]);
-
-                setRooms(roomData.data);
-
-                if (roomBookedData.data.length !== 0) {
+                const roomResponse = await axios.get('http://localhost:8080/api/room/floor/1');
+                setRooms(roomResponse.data);
+                const roomBookedResponse = await axios.post(`http://localhost:8080/api/reservation/floor`, { guest: guest, from: from, to: to });
+                if (roomBookedResponse.data.length !== 0) {
                     setRooms(prevRooms => {
                         const updatedRooms = prevRooms.map(room => {
-                            if (roomBookedData.data.includes(room.number)) {
+                            if (roomBookedResponse.data.includes(room.number)) {
                                 return {
                                     ...room,
                                     booked: 1
                                 };
                             }
-                            if (roomBookedData.data.includes(room.number * -1)) {
+                            if (roomBookedResponse.data.includes(room.number * -1)) {
                                 return {
                                     ...room,
                                     booked: -1
@@ -155,7 +151,7 @@ function FirstFloor({ toggleRoomInfo, reserveInfo, triggerBindingOnMessageReceiv
                     <div className={style.itemChild}><Room data={rooms[29]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                     <div className={style.itemChild}><Room data={rooms[28]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                     <div className={style.itemChild}><Room data={rooms[34]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                    <div className={`${style.itemChild} ${style.largeChild}`}><Room data={null}/></div>
+                    <div className={`${style.itemChild} ${style.largeChild}`}><Room data={null} /></div>
                     <div className={style.itemChild}><Room data={rooms[27]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                     <div className={style.itemChild}><Room data={rooms[35]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                     <div className={style.itemChild}><Room data={rooms[26]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>

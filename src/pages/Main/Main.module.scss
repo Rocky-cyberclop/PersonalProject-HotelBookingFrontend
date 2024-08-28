@@ -14,6 +14,10 @@
   margin: 0 5px;
 }
 
+.textBold {
+  font-weight: bold;
+}
+
 .mainBackground {
   width: 100%;
   max-height: 500px;
@@ -269,225 +273,18 @@
       height: fit-content;
 
       .advertisement {
-        padding: 15px;
         border: 1px solid rgb(206, 206, 206);
         border-radius: 10px;
         margin: 0 10px 10px 0;
-
-        .rating {
-          display: flex;
-          align-items: center;
-
-          .stars,
-          .like {
-            font-size: 12px;
-            margin-left: 10px;
-          }
-
-          .stars {
-            .icon {
-              color: rgb(255, 210, 64);
-            }
-          }
-
-          .like {
-            color: aliceblue;
-            background-color: rgb(255, 210, 64);
-            padding: 5px;
-            border-radius: 2px;
-          }
-        }
-
-        .name {
-          font-size: 20px;
-          font-weight: bolder;
-          margin: 10px 0;
-        }
-
-        .address {
-          margin: 10px 0;
-        }
-
-        .slogan {
-          display: flex;
-          align-items: center;
-
-          .score,
-          .wifi,
-          .compliment,
-          .parking {
-            margin-right: 10px;
-          }
-
-          .score {
-            padding: 10px;
-            color: aliceblue;
-            background-color: rgb(9, 9, 157);
-            border-radius: 10px 10px 10px 0;
-          }
-        }
-      }
-
-      .bookingDetail {
-        padding: 20px;
-        border: 1px solid rgb(206, 206, 206);
-        border-radius: 10px;
-        margin-right: 10px;
-
-        .header {
-          font-weight: bolder;
-          font-size: larger;
-          margin-bottom: 10px;
-        }
-
-        .check {
-          display: flex;
-          width: 100%;
-          padding: 20px 0 20px 0;
-
-          > div {
-            width: 50%;
-            position: relative;
-            margin: 5px 0;
-          }
-
-          .title {
-            font-size: large;
-          }
-
-          .date {
-            font-size: large;
-            font-weight: bold;
-            margin: 10px 0;
-          }
-
-          .time {
-            color: rgb(95, 95, 95);
-          }
-
-          .checkIn {
-            margin-right: 10px;
-          }
-
-          .checkIn::after {
-            display: block;
-            content: "";
-            position: absolute;
-            left: 100%;
-            top: 40%;
-            width: 1px;
-            height: 60%;
-            background-color: rgb(196, 196, 196);
-          }
-        }
-
-        .warning {
-          font-size: 20px;
-          margin-bottom: 10px;
-
-          .icon {
-            margin-right: 10px;
-          }
-        }
-
-        .near {
-          color: rgb(164, 16, 16);
-        }
-
-        .days {
-          .totalDays {
-            margin: 5px 0;
-            font-weight: bolder;
-          }
-        }
-
-        .selected {
-          border-top: 1px solid rgb(212, 212, 212);
-          margin-top: 20px;
-          padding-top: 20px;
-
-          .description {
-            margin: 10px 0;
-            font-size: 20px;
-            font-weight: bolder;
-          }
-        }
-      }
-
-      .priceSumary {
-        border: 1px solid rgb(206, 206, 206);
-        border-radius: 10px;
-        margin: 10px 10px 10px 0;
-
-        .header {
-          .title {
-            padding: 20px 15px;
-            font-size: larger;
-            font-weight: bolder;
-          }
-
-          .content {
-            display: flex;
-            background-color: rgb(233, 243, 252);
-            justify-content: space-between;
-
-            > div {
-              display: block;
-              padding: 30px 15px;
-              font-size: 25px;
-              font-weight: bolder;
-
-              .description {
-                font-size: medium;
-                font-weight: 100;
-                color: gray;
-                float: right;
-              }
-
-              .total {
-                float: right;
-              }
-            }
-          }
-        }
-
-        .body {
+        .filterHeader {
+          font-weight: bold;
           padding: 15px;
-
-          .title {
-            font-size: larger;
-            font-weight: bolder;
-            margin-bottom: 20px;
-          }
-
-          .item {
-            display: flex;
-            margin: 10px 0;
-
-            .icon {
-              width: 20px;
-              margin-right: 10px;
-            }
-
-            &:last-child {
-              padding-bottom: 20px;
-              border-bottom: 1px solid rgb(214, 214, 214);
-            }
-          }
+          border-bottom: 1px solid rgb(206, 206, 206);
         }
-
-        .footer {
+        .filterType {
           padding: 15px;
-
-          .title {
-            font-size: larger;
-            font-weight: bolder;
-            margin-bottom: 20px;
-          }
-
-          .icon {
-            width: 20px;
-            margin-right: 10px;
+          border-bottom: 1px solid rgb(206, 206, 206);
+          .filterTypeItem {
           }
         }
       }

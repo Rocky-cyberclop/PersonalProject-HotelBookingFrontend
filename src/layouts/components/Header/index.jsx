@@ -99,7 +99,7 @@ function Header() {
                 <h1 className={style.logo}><Link to={"/"}> <img src={Logo} width={50} alt="" /> </Link></h1>
                 <div className={style.nav}>
                     <div className={style.navItemWrapper}>
-                        <div className={style.navItem}>English<FontAwesomeIcon className={style.ml5} icon={faLanguage} /></div>
+                        {/* <div className={style.navItem}>English<FontAwesomeIcon className={style.ml5} icon={faLanguage} /></div> */}
                         <Link className={style.navItem} to={"/findReservation"}><div>My Reservation<FontAwesomeIcon className={style.ml5} icon={faTicket} /></div></Link>
                         {!token && <Link to={"/login"}><div className={style.navItem}>Login</div></Link>}
                         {!token && <Link to={"/register"}><div className={style.navItem}>Register</div></Link>}

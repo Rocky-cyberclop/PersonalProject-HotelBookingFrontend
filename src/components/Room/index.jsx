@@ -1,3 +1,4 @@
+/* eslint-disable */
 import style from './Room.module.scss'
 import ConferenceRoomImage from '../../assets/images/reference-room.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

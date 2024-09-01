@@ -309,14 +309,35 @@ function ChooseRoom() {
                 <div className={style.infoContainer}>
                     <div className={style.header}>This is our room</div>
                     <div className={style.body}>
-                        <div className={style.number}>Number: {room.number}</div>
+                        <div className={style.number}>Number of room: {room.number}</div>
 
                         <div className={style.images}>
-                            <div>Image here!</div>
+                            <div className={style.imageTitle}>Can you see your favorite?</div>
                             <CarouselComponent images={room.pictures} />
                         </div>
-                        <div className={style.description}>{room.description}</div>
-                        <div className={style.price}>{room.price}$</div>
+                        <div className={style.description}>
+                            {room.description?.split(',').slice(0, 1).map(item => (
+                                // <ul>
+                                <div key={item}>
+                                    <div className={style.ulTitle}>
+                                        {item}
+                                    </div>
+                                    {
+                                        room.description?.split(',').slice(1).map(item => (
+                                            <li key={item}>{item}
+                                            </li>
+                                        ))
+                                    }
+                                </div>
+                                // </ul>
+                            ))}
+                        </div>
+                        <div className={style.price}>With a reasonable price is
+                            <span className={style.priceNumber}>
+                                {' ' + room.price}
+                            </span>
+                            $ per night
+                        </div>
 
 
                     </div>

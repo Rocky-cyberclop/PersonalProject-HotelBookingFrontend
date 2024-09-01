@@ -269,7 +269,7 @@
     display: flex;
     position: relative;
     .totalValue {
-      width: 30%;
+      width: 25%;
       height: fit-content;
 
       .advertisement {
@@ -291,8 +291,113 @@
     }
 
     .info {
-      width: 65%;
+      width: 75%;
       margin-left: 10px;
+
+      .room {
+        overflow: scroll;
+        border: 1px solid rgb(202, 202, 202);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+        display: flex;
+        width: 100%;
+        .roomImage {
+          margin-right: 10px;
+          .roomImg {
+            border-radius: 5%;
+            border: 1px solid rgb(202, 202, 202);
+          }
+        }
+        .roomText {
+          width: 50%;
+          .rating {
+            display: flex;
+            align-items: center;
+            .titleRating {
+              flex-wrap: wrap;
+              color: #2c76e5;
+              font-weight: bolder;
+              font-size: 20px;
+              &:hover {
+                color: #123160;
+                cursor: pointer;
+              }
+            }
+            .stars,
+            .like {
+              font-size: 12px;
+            }
+
+            .stars {
+              margin: 0 5px;
+              .icon {
+                color: rgb(255, 210, 64);
+                margin: 0;
+              }
+            }
+
+            .like {
+              color: aliceblue;
+              background-color: rgb(255, 210, 64);
+              padding: 5px;
+              border-radius: 2px;
+            }
+          }
+          .roomTextBody {
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 20px;
+            font-family: sans-serif;
+          }
+        }
+        .roomReserve {
+          width: 17%;
+          .roomReserveRating {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .ratingText {
+              line-height: 20px;
+              .ratingScore {
+                font-size: 12px;
+                color: #585b5f;
+              }
+            }
+            .score {
+              padding: 10px;
+              color: aliceblue;
+              background-color: rgb(9, 9, 157);
+              border-radius: 10px 10px 10px 0;
+            }
+          }
+          .roomReserveLocation {
+            color: #2c76e5;
+            text-align: end;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 30px 0;
+            &:hover {
+              text-decoration: underline;
+              cursor: pointer;
+            }
+          }
+          .roomReservePrice {
+            text-align: end;
+            margin-bottom: 10px;
+          }
+          .roomReserveButton {
+            text-align: end;
+          }
+        }
+      }
+
+      .firstSuggest {
+        background-color: #f1f7ff;
+        box-shadow: 0 0 5px lightblue;
+        border-color: lightblue;
+      }
 
       .content {
         border: 1px solid rgb(202, 202, 202);

@@ -1,174 +1,182 @@
 .container {
-    width: 80%;
-    margin: 20px auto;
+  width: 80%;
+  margin: 20px auto;
+  display: flex;
+  position: relative;
+
+  .elevator {
+    position: absolute;
+    top: 200px;
+    right: 105%;
+
+    .up,
+    .down {
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: rgb(110, 113, 112);
+      }
+    }
+  }
+
+  .instruction {
+    position: absolute;
     display: flex;
+    justify-content: center;
+    left: 15%;
+
+    .youChoose,
+    .someoneChoosing,
+    .booked {
+      display: flex;
+      flex-wrap: nowrap;
+      margin-right: 10px;
+
+      .color {
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        margin-right: 5px;
+      }
+    }
+
+    .youChoose {
+      .color {
+        background-color: greenyellow;
+      }
+    }
+
+    .someoneChoosing {
+      .color {
+        background-color: rgb(116, 116, 205);
+      }
+    }
+
+    .booked {
+      .color {
+        background-color: rgb(168, 168, 167);
+      }
+    }
+  }
+
+  .floor {
+    width: 78%;
+  }
+
+  .info {
+    width: 22%;
+    border-radius: 10px;
+    margin: 5px;
     position: relative;
-
-    .elevator {
-        position: absolute;
-        top: 200px;
-        right: 105%;
-
-        .up,
-        .down {
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-
-            &:hover {
-                background-color: rgb(110, 113, 112);
-            }
-        }
-
-    }
-
-    .instruction {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        left: 15%;
-
-        .youChoose,
-        .someoneChoosing,
-        .booked {
-            display: flex;
-            flex-wrap: nowrap;
-            margin-right: 10px;
-
-            .color {
-                width: 20px;
-                height: 20px;
-                border-radius: 5px;
-                margin-right: 5px;
-            }
-        }
-
-        .youChoose {
-            .color {
-                background-color: greenyellow;
-            }
-        }
-
-        .someoneChoosing {
-            .color {
-                background-color: rgb(116, 116, 205);
-            }
-        }
-
-        .booked {
-            .color {
-                background-color: rgb(168, 168, 167);
-            }
-        }
-    }
-
-    .floor {
-        width: 78%;
-    }
-
-    .info {
-        width: 22%;
-        border-radius: 10px;
-        margin: 5px;
-        position: relative;
-        box-shadow: 1px 1px 5px gray;
-
-        .header {
-            padding: 30px 10px;
-            font-size: larger;
-            font-weight: bold;
-            text-transform: uppercase;
-            background-color: rgb(170, 170, 199);
-            border-radius: 10px 10px 0 0;
-
-        }
-
-        .body {
-            padding: 10px;
-
-            .prices,
-            .tax {
-                margin: 10px 0;
-            }
-
-            .listRooms {
-                display: flex;
-                flex-wrap: wrap;
-                .roomItem{
-                    margin-left: 5px;
-                }
-            }
-
-        }
-
-        .footer {
-            padding: 10px;
-            bottom: 1%;
-            position: absolute;
-
-            .deposit {
-                margin: 10px 0;
-            }
-        }
-
-    }
-
-}
-
-.infoContainer {
-    display: block;
-    position: relative;
-    width: 90%;
-    padding: 20px;
+    box-shadow: 1px 1px 5px gray;
 
     .header {
-        font-size: large;
-        font-weight: bold;
-        width: 100%;
+      padding: 30px 10px;
+      font-size: larger;
+      font-weight: bold;
+      text-transform: uppercase;
+      background-color: rgb(170, 170, 199);
+      border-radius: 10px 10px 0 0;
     }
 
     .body {
-        width: 100%;
+      padding: 10px;
 
-        .number {
-            margin: 10px 0;
+      .prices,
+      .tax {
+        margin: 10px 0;
+      }
+
+      .listRooms {
+        display: flex;
+        flex-wrap: wrap;
+        .roomItem {
+          margin-left: 5px;
         }
-
-        .images {
-            width: 100%;
-            margin: 20px 0;
-
-            div {
-                margin: 10px 0;
-            }
-        }
-
-        .description {
-            margin: 10px 0 20px;
-        }
-
-        .price {
-            margin: 10px 0 20px;
-        }
+      }
     }
 
     .footer {
-        position: absolute;
+      padding: 10px;
+      bottom: 1%;
+      position: absolute;
+
+      .deposit {
+        margin: 10px 0;
+      }
     }
+  }
+}
+
+.infoContainer {
+  display: block;
+  position: relative;
+  width: 90%;
+  padding: 20px;
+
+  .header {
+    font-size: large;
+    font-weight: bold;
+    width: 100%;
+  }
+
+  .body {
+    width: 100%;
+
+    .number {
+      margin: 10px 0;
+    }
+
+    .images {
+      width: 100%;
+      margin: 20px 0;
+
+      .imageTitle {
+        font-weight: bold;
+        margin: 10px 0;
+        font-size: 20px;
+      }
+    }
+
+    .description {
+      margin: 10px 0 20px;
+      font-size: 20px;
+      font-weight: bold;
+      .ulTitle {
+        font-weight: 100;
+        li {
+          text-decoration: dotted;
+        }
+      }
+    }
+
+    .price {
+      margin: 10px 0 20px;
+      .priceNumber {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .footer {
+    bottom: 5%;
+  }
 }
 
 @media (max-width: 1000px) {
-    .container .info {
-        display: none;
-    }
+  .container .info {
+    display: none;
+  }
 
-    .container .floor {
-        width: 100%;
-    }
+  .container .floor {
+    width: 100%;
+  }
 
-    .container{
-        .instruction{
-            left: 18%;
-        }
+  .container {
+    .instruction {
+      left: 18%;
     }
+  }
 }

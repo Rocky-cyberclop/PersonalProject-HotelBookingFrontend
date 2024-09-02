@@ -48,9 +48,9 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
     }
     useEffect(() => {
         const fetchData = () => {
-            console.log(condition)
-            console.log(dateRange)
-            console.log(people)
+            // console.log(condition)
+            // console.log(dateRange)
+            // console.log(people)
             setDataFound([])
         }
         fetchData()

@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+/* eslint-disable */
+import React, { useEffect, useState } from 'react'
 import style from './Main.module.scss';
-import { Checkbox, FormControlLabel, Button } from '@mui/material';
+import { Checkbox, FormControlLabel, Button, Pagination } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faStar, faThumbsUp,
+    faStar, faThumbsUp, faArrowDownWideShort
 } from '@fortawesome/free-solid-svg-icons';
 
 import slide1 from '../../assets/images/slide1.jpeg'
@@ -30,18 +31,30 @@ const capacities = [
     { title: 'Three person', value: '10' },
 ]
 
-const SuggestPage = () => {
-    const [filter, setFilter] = useState([])
+const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
+    const [dataFound, setDataFound] = useState([])
+    const [condition, setCondition] = useState({ page: 1, filterArray: [] })
     const HandleChosseFilter = (e) => {
-        const existed = filter.indexOf(e.target.value)
+        const existed = condition?.filterArray?.indexOf(e.target.value)
         if (existed === -1) {
-            setFilter(pre => [...pre, e.target.value])
+            setCondition(pre => ({ ...pre, filterArray: [...pre.filterArray, e.target.value] }))
         }
         else {
-            setFilter(pre => pre.filter(item => item !== e.target.value))
+            setCondition(pre => ({
+                ...pre,
+                filterArray: pre?.filterArray?.filter(item => item !== e.target.value)
+            }))
         }
-        // console.log(filter)
     }
+    useEffect(() => {
+        const fetchData = () => {
+            console.log(condition)
+            console.log(dateRange)
+            console.log(people)
+            setDataFound([])
+        }
+        fetchData()
+    }, [condition?.filterArray, condition?.page])
     return (
         <div className={style.why}>
             <div className={style.suggestPage}>
@@ -83,6 +96,19 @@ const SuggestPage = () => {
                     </div>
                 </div>
                 <div className={style.info}>
+                    <div className={style.noSuggestion}>
+                        <div className={style.suggestionsFound}>
+                            <div className={style.suggestionsNumber}>Can Tho: 24 properties found</div>
+                            <div className={style.suggestionsSortBy}>
+                                <FontAwesomeIcon icon={faArrowDownWideShort} className={style.suggestionsSortByIcon} />Sort by: closest relate
+                            </div>
+                        </div>
+                        <div className={style.pickYourOwn}>
+                            <span className={style.pickYourOwnNotFound}>Not found your favorite?</span>
+                            <button className={style.pickYourOwnChoose} onClick={handleChooseOwn}>Choose more ways out!</button>
+
+                        </div>
+                    </div>
                     <div className={`${style.room} ${style.firstSuggest}`}>
                         <div className={style.roomImage}><img src={slide1} className={style.roomImg} alt='pic' /></div>
                         <div className={style.roomText}>
@@ -189,6 +215,9 @@ const SuggestPage = () => {
                             </div>
                         </div>
                     </div>
+                    <Pagination onChange={(_, value) => {
+                        setCondition(pre => ({ ...pre, page: value }))
+                    }} count={10} shape="rounded" />
                 </div>
             </div>
         </div>

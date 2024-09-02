@@ -127,11 +127,11 @@ function Main() {
             toast.error("Please choose date to check-in and date to check-out");
             return;
         }
-        if(nextPage!==true){
+        if (nextPage !== true) {
             setNextPage(true)
             isOneModalOpen.style.display = "none";
         }
-        else{
+        else {
             const fetchData = async () => {
                 try {
                     const response = await axios.post(`http://localhost:8080/api/reservation/chooseRoom`, { from: date.checkInDate, to: date.checkOutDate });
@@ -156,7 +156,7 @@ function Main() {
 
     return (
         <div className={style.container}>
-            <img className={style.mainBackground} src={Background} />
+            <img className={style.mainBackground} src={Background} alt='' />
             <div className={style.content}>
                 <div className={style.inputBar}>
                     <div
@@ -224,7 +224,7 @@ function Main() {
                     >Choose room</div>
                 </div>
             </div>
-            {(nextPage===true?<SuggestPage/>:<MainPage/>)}
+            {(nextPage === true ? <SuggestPage handleChooseOwn={HandleChooseRoom} dateRange={date} people={{ adults, children, room }} /> : <MainPage />)}
             <div className={style.footer}>
                 <div className={style.footerContainer}>
                     <div className={style.logo}>

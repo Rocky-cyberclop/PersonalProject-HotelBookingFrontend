@@ -294,6 +294,47 @@
       width: 75%;
       margin-left: 10px;
 
+      .noSuggestion {
+        display: flex;
+        justify-content: space-between;
+        .suggestionsFound {
+          .suggestionsNumber {
+            font-weight: bolder;
+            font-size: 20px;
+            margin-bottom: 10px;
+          }
+          .suggestionsSortBy {
+            border: 1px solid black;
+            padding: 10px;
+            width: fit-content;
+            border-radius: 20px;
+            &:hover {
+              background-color: rgb(241, 241, 241);
+              cursor: pointer;
+            }
+            .suggestionsSortByIcon {
+              margin-right: 10px;
+            }
+          }
+        }
+        .pickYourOwn {
+          .pickYourOwnNotFound {
+            color: #5e5e5e;
+            font-size: 17px;
+          }
+          .pickYourOwnChoose {
+            margin-left: 5px;
+            color: #123160;
+            font-weight: bold;
+            font-size: large;
+            &:hover {
+              text-decoration: underline;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
       .room {
         overflow: scroll;
         border: 1px solid rgb(202, 202, 202);

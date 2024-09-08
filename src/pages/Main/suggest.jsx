@@ -6,33 +6,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faStar, faThumbsUp, faArrowDownWideShort
 } from '@fortawesome/free-solid-svg-icons';
+import RatingScore from './ratingScore';
+import axios from 'axios';
 
 import slide1 from '../../assets/images/slide1.jpeg'
 import slide2 from '../../assets/images/slide2.jpeg'
 import slide3 from '../../assets/images/slide3.jpeg'
 
-const compliments = ['Fabulous', 'Very good', 'Superb', 'Good']
 
 const roomType = [
-    { title: 'Classic room', value: '0' },
-    { title: 'Couple room', value: '1' },
-    { title: 'Extra large room', value: '2' },
+    { title: 'Classic room', value: 0 },
+    { title: 'Couple room', value: 1 },
+    { title: 'Extra large room', value: 2 },
 ]
 const utilities = [
-    { title: 'Television', value: '3' },
-    { title: 'Free wifi', value: '4' },
-    { title: 'Fridge', value: '5' },
-    { title: 'A bathtub', value: '6' },
-    { title: 'Single bed beside double bed', value: '7' },
+    { title: 'Television', value: 3 },
+    { title: 'Free wifi', value: 4 },
+    { title: 'Fridge', value: 5 },
+    { title: 'A bathtub', value: 6 },
+    { title: 'Single bed beside double bed', value: 7 },
 ]
 const capacities = [
-    { title: 'One person', value: '8' },
-    { title: 'Two person', value: '9' },
-    { title: 'Three person', value: '10' },
+    { title: 'One person', value: 8 },
+    { title: 'Two person', value: 9 },
+    { title: 'Three person', value: 10 },
 ]
 
 const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
     const [dataFound, setDataFound] = useState([])
+    const [rooms, setRooms] = useState([])
     const [condition, setCondition] = useState({ page: 1, filterArray: [] })
     const HandleChosseFilter = (e) => {
         const existed = condition?.filterArray?.indexOf(e.target.value)
@@ -47,14 +49,36 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
         }
     }
     useEffect(() => {
-        const fetchData = () => {
-            // console.log(condition)
-            // console.log(dateRange)
-            // console.log(people)
-            setDataFound([])
+        const fetchData = async () => {
+            try {
+                const response = await axios.post(`http://localhost:8080/api/reservation/chooseRoomOldConcept`,
+                    {
+                        from: dateRange.checkInDate,
+                        to: dateRange.checkOutDate,
+                        page: condition.page,
+                        filter: condition.filterArray,
+                        adults: people.adults,
+                        children: people.children,
+                        numberOfRoom: people.room
+                    }
+                );
+                setDataFound([])
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return;
+            }
         }
         fetchData()
     }, [condition?.filterArray, condition?.page])
+    const handleChooseThisRoom = (number) => {
+        const existed = rooms.indexOf(number)
+        if (existed === -1) {
+            setRooms(pre => ([...pre, number]))
+        }
+        else {
+            setRooms(pre => pre.filter(item => item !== number))
+        }
+    }
     return (
         <div className={style.why}>
             <div className={style.suggestPage}>
@@ -128,10 +152,7 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                         </div>
                         <div className={style.roomReserve}>
                             <div className={style.roomReserveRating}>
-                                <div className={style.ratingText}>
-                                    <div>{compliments.at(Math.floor(Math.random() * 4))}</div>
-                                    <div className={style.ratingScore}>{Math.round(Math.random(1, 100) * 1000)} reviews</div>
-                                </div>
+                                <RatingScore />
                                 <div className={style.score}>9.1</div>
 
                             </div>
@@ -141,7 +162,8 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                                 <Button
                                     style={{ backgroundColor: 'rgb(36, 36, 168)' }}
                                     variant="contained"
-                                >Reserve</Button>
+                                    onClick={() => { handleChooseThisRoom(1) }}
+                                >{!rooms.includes(1) ? 'Reserve' : 'Unreserve'}</Button>
                             </div>
                         </div>
                     </div>
@@ -164,19 +186,18 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                         </div>
                         <div className={style.roomReserve}>
                             <div className={style.roomReserveRating}>
-                                <div className={style.ratingText}>
-                                    <div>{compliments.at(Math.floor(Math.random() * 4))}</div>
-                                    <div className={style.ratingScore}>{Math.round(Math.random(1, 100) * 1000)} reviews</div>
-                                </div>
+                                <RatingScore />
                                 <div className={style.score}>9.1</div>
 
                             </div>
                             <div className={style.roomReserveLocation}>Location 9.3</div>
+                            <div className={style.roomReservePrice}>$500</div>
                             <div className={style.roomReserveButton}>
                                 <Button
                                     style={{ backgroundColor: 'rgb(36, 36, 168)' }}
                                     variant="contained"
-                                >Reserve</Button>
+                                    onClick={() => { handleChooseThisRoom(2) }}
+                                >{!rooms.includes(2) ? 'Reserve' : 'Unreserve'}</Button>
                             </div>
                         </div>
                     </div>
@@ -199,19 +220,18 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                         </div>
                         <div className={style.roomReserve}>
                             <div className={style.roomReserveRating}>
-                                <div className={style.ratingText}>
-                                    <div>{compliments.at(Math.floor(Math.random() * 4))}</div>
-                                    <div className={style.ratingScore}>{Math.round(Math.random(1, 100) * 1000)} reviews</div>
-                                </div>
+                                <RatingScore />
                                 <div className={style.score}>9.1</div>
 
                             </div>
                             <div className={style.roomReserveLocation}>Location 9.3</div>
+                            <div className={style.roomReservePrice}>$500</div>
                             <div className={style.roomReserveButton}>
                                 <Button
                                     style={{ backgroundColor: 'rgb(36, 36, 168)' }}
                                     variant="contained"
-                                >Reserve</Button>
+                                    onClick={() => { handleChooseThisRoom(3) }}
+                                >{!rooms.includes(3) ? 'Reserve' : 'Unreserve'}</Button>
                             </div>
                         </div>
                     </div>

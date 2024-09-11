@@ -155,7 +155,7 @@ function SecondFloor({ toggleRoomInfo, reserveInfo, triggerBindingOnMessageRecei
                     <div className={style.itemChild}><Room data={rooms[29]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                     <div className={style.itemChild}><Room data={rooms[28]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                     <div className={style.itemChild}><Room data={rooms[34]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
-                    <div className={`${style.itemChild} ${style.largeChild}`}><Room data={null}/></div>
+                    <div className={`${style.itemChild} ${style.largeChild}`}><Room data={null} /></div>
                     <div className={style.itemChild}><Room data={rooms[27]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                     <div className={style.itemChild}><Room data={rooms[35]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>
                     <div className={style.itemChild}><Room data={rooms[26]} toggleRoomInfo={toggleRoomInfo} setRooms={onMessageReceived} bookingRooms={bookingRooms} /></div>

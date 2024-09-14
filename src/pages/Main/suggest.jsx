@@ -68,8 +68,10 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                 return;
             }
         }
-        fetchData()
-    }, [condition?.filterArray, condition?.page])
+        if (dateRange.checkInDate && dateRange.checkOutDate) {
+            fetchData()
+        }
+    }, [condition?.filterArray, condition?.page, dateRange.checkInDate, dateRange.checkOutDate])
     const handleChooseThisRoom = (number) => {
         const existed = rooms.indexOf(number)
         if (existed === -1) {

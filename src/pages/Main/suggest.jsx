@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import style from './Main.module.scss';
 import { Checkbox, FormControlLabel, Button, Pagination } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,8 +33,10 @@ const capacities = [
 
 const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
     const [dataFound, setDataFound] = useState([])
+    const [token, setToken] = useState('')
     const [rooms, setRooms] = useState([])
     const [condition, setCondition] = useState({ page: 1, filterArray: [], totalPage: 0, totalValue: 0 })
+    const navigate = useNavigate()
     const HandleChosseFilter = (e) => {
         const existed = condition?.filterArray?.indexOf(e.target.value)
         if (existed === -1) {
@@ -46,6 +49,21 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
             }))
         }
     }
+    useEffect(() => {
+        const makeReservation = async () => {
+            try {
+                const response = await axios.post(`http://localhost:8080/api/reservation/chooseRoom`, {
+                    from: dateRange.checkInDate,
+                    to: dateRange.checkOutDate,
+                });
+                setToken(response.data)
+
+            } catch (error) {
+                console.error('Error in reservation process:', error);
+            }
+        };
+        makeReservation();
+    }, [])
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -84,14 +102,56 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
     const handleChooseThisRoom = (number) => {
         const existed = rooms.indexOf(number)
         if (existed === -1) {
-            if (rooms.length < people.room) { setRooms(pre => ([...pre, number])) }
+            if (rooms.length < people.room) {
+                setRooms(pre => ([...pre, number]))
+                bindRoom(number, 'RESERVING')
+            }
             else {
                 toast.warning("You have chosen enough room!")
             }
         }
         else {
             setRooms(pre => pre.filter(item => item !== number))
+            bindRoom(number, 'UNRESERVED')
         }
+    }
+    const bindRoom = async (number, type) => {
+        try {
+            const requestBody = {
+                from: dateRange.checkInDate,
+                to: dateRange.checkOutDate,
+                room: number,
+                type: type,
+                guest: token,
+            };
+            await axios.post('http://localhost:8080/api/reservation/reserve', requestBody);
+        } catch (error) {
+            console.error('Error binding room:', error);
+            throw error;
+        }
+    };
+    const handleDoneChooseRoom = () => {
+        const navigateToFillInfo = async (token) => {
+            try {
+                const response = await axios.post(`http://localhost:8080/api/reservation/doneChooseRoom`, {
+                    guest: token,
+                    numberOfPeople: people.adults,
+                });
+                if (response.data === null) {
+                    toast.error("Reservation no longer exists, please check again!");
+                    return;
+                }
+                navigate('/fillInfo', {
+                    state: {
+                        reservation: response.data,
+                        adults: people.adults,
+                    },
+                });
+            } catch (error) {
+                console.error('Error completing reservation:', error);
+            }
+        };
+        navigateToFillInfo(token);
     }
     return (
         <div className={style.why}>
@@ -142,14 +202,25 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                             </div>
                         </div>
                         <div className={style.pickYourOwn}>
-                            <span className={style.pickYourOwnNotFound}>Not found your favorite?</span>
-                            <button className={style.pickYourOwnChoose} onClick={handleChooseOwn}>Choose more ways out!</button>
-
+                            <div>
+                                <span className={style.pickYourOwnNotFound}>Not found your favorite?</span>
+                                <button className={style.pickYourOwnChoose} onClick={handleChooseOwn}>Choose more ways out!</button>
+                            </div>
+                            <div className={style.pickYourOwnDone}>
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    disabled={rooms.length === 0}
+                                    onClick={handleDoneChooseRoom}
+                                >
+                                    Next Step: Fill your information
+                                </Button>
+                            </div>
                         </div>
                     </div>
                     {
                         dataFound?.map((item, index) => (
-                            <div className={`${style.room} ${index === 0 ? style.firstSuggest : ''}`}>
+                            <div className={`${style.room} ${index === 0 ? style.firstSuggest : ''}`} key={item.number}>
                                 <Img change={condition} />
                                 <div className={style.roomText}>
                                     <div className={style.rating}>

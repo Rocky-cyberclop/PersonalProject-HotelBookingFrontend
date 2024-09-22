@@ -135,7 +135,6 @@ function Main() {
             const fetchData = async () => {
                 try {
                     const response = await axios.post(`http://localhost:8080/api/reservation/chooseRoom`, { from: date.checkInDate, to: date.checkOutDate });
-                    console.log(response.data);
                     navigate('/chooseRoom', {
                         state: {
                             token: response.data,

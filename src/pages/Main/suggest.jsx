@@ -8,10 +8,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import RatingScore from './ratingScore';
 import axios from 'axios';
-
-import slide1 from '../../assets/images/slide1.jpeg'
-import slide2 from '../../assets/images/slide2.jpeg'
-import slide3 from '../../assets/images/slide3.jpeg'
+import Img from './img';
+import { toast } from 'react-toastify';
 
 
 const roomType = [
@@ -35,7 +33,7 @@ const capacities = [
 const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
     const [dataFound, setDataFound] = useState([])
     const [rooms, setRooms] = useState([])
-    const [condition, setCondition] = useState({ page: 1, filterArray: [] })
+    const [condition, setCondition] = useState({ page: 1, filterArray: [], totalPage: 0, totalValue: 0 })
     const HandleChosseFilter = (e) => {
         const existed = condition?.filterArray?.indexOf(e.target.value)
         if (existed === -1) {
@@ -55,14 +53,20 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                     {
                         from: dateRange.checkInDate,
                         to: dateRange.checkOutDate,
-                        page: condition.page,
+                        page: condition.page - 1,
                         filter: condition.filterArray,
                         adults: people.adults,
                         children: people.children,
-                        numberOfRoom: people.room
+                        numberOfRoom: 10
                     }
                 );
-                setDataFound([])
+                setDataFound(response.data.rooms)
+                setCondition(pre => ({
+                    ...pre,
+                    totalValue: response.data.total,
+                    totalPage: response.data.total / 10,
+
+                }))
             } catch (error) {
                 console.error('Error fetching data:', error);
                 return;
@@ -71,11 +75,19 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
         if (dateRange.checkInDate && dateRange.checkOutDate) {
             fetchData()
         }
-    }, [condition?.filterArray, condition?.page, dateRange.checkInDate, dateRange.checkOutDate])
+    }, [
+        condition?.filterArray,
+        condition?.page,
+        dateRange.checkInDate, dateRange.checkOutDate,
+        people.room
+    ])
     const handleChooseThisRoom = (number) => {
         const existed = rooms.indexOf(number)
         if (existed === -1) {
-            setRooms(pre => ([...pre, number]))
+            if (rooms.length < people.room) { setRooms(pre => ([...pre, number])) }
+            else {
+                toast.warning("You have chosen enough room!")
+            }
         }
         else {
             setRooms(pre => pre.filter(item => item !== number))
@@ -124,9 +136,9 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                 <div className={style.info}>
                     <div className={style.noSuggestion}>
                         <div className={style.suggestionsFound}>
-                            <div className={style.suggestionsNumber}>Can Tho: 24 properties found</div>
+                            <div className={style.suggestionsNumber}>Can Tho: {condition.totalValue} properties found</div>
                             <div className={style.suggestionsSortBy}>
-                                <FontAwesomeIcon icon={faArrowDownWideShort} className={style.suggestionsSortByIcon} />Sort by: closest relate
+                                <FontAwesomeIcon icon={faArrowDownWideShort} className={style.suggestionsSortByIcon} />Sort by: closest related
                             </div>
                         </div>
                         <div className={style.pickYourOwn}>
@@ -135,114 +147,51 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
 
                         </div>
                     </div>
-                    <div className={`${style.room} ${style.firstSuggest}`}>
-                        <div className={style.roomImage}><img src={slide1} className={style.roomImg} alt='pic' /></div>
-                        <div className={style.roomText}>
-                            <div className={style.rating}>
-                                <div className={style.titleRating}>Silverland Sakyo Hotel</div>
-                                <div className={style.stars}>
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
+                    {
+                        dataFound?.map((item, index) => (
+                            <div className={`${style.room} ${index === 0 ? style.firstSuggest : ''}`}>
+                                <Img change={condition} />
+                                <div className={style.roomText}>
+                                    <div className={style.rating}>
+                                        <div className={style.titleRating}>Room number {item.number}</div>
+                                        <div className={style.stars}>
+                                            <FontAwesomeIcon icon={faStar} className={style.icon} />
+                                            <FontAwesomeIcon icon={faStar} className={style.icon} />
+                                            <FontAwesomeIcon icon={faStar} className={style.icon} />
+                                            <FontAwesomeIcon icon={faStar} className={style.icon} />
+                                        </div>
+                                        <FontAwesomeIcon icon={faThumbsUp} className={style.like} />
+                                    </div>
+                                    <div className={style.roomTextBody}>
+                                        {item.description}
+                                    </div>
                                 </div>
-                                <FontAwesomeIcon icon={faThumbsUp} className={style.like} />
-                            </div>
-                            <div className={style.roomTextBody}>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </div>
-                        </div>
-                        <div className={style.roomReserve}>
-                            <div className={style.roomReserveRating}>
-                                <RatingScore />
-                                <div className={style.score}>9.1</div>
+                                <div className={style.roomReserve}>
+                                    <div className={style.roomReserveRating}>
+                                        <RatingScore />
+                                        <div className={style.score}>9.1</div>
 
-                            </div>
-                            <div className={style.roomReserveLocation}>Location 9.3</div>
-                            <div className={style.roomReservePrice}>$500</div>
-                            <div className={style.roomReserveButton}>
-                                <Button
-                                    style={{ backgroundColor: 'rgb(36, 36, 168)' }}
-                                    variant="contained"
-                                    onClick={() => { handleChooseThisRoom(1) }}
-                                >{!rooms.includes(1) ? 'Reserve' : 'Unreserve'}</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`${style.room}`}>
-                        <div className={style.roomImage}><img src={slide2} className={style.roomImg} alt='pic' /></div>
-                        <div className={style.roomText}>
-                            <div className={style.rating}>
-                                <div className={style.titleRating}>Silverland Sakyo Hotel</div>
-                                <div className={style.stars}>
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
+                                    </div>
+                                    <div className={style.roomReserveLocation}>Location 9.3</div>
+                                    <div className={style.roomReservePrice}>${item.price} per night</div>
+                                    <div className={style.roomReserveButton}>
+                                        <Button
+                                            style={{ backgroundColor: 'rgb(36, 36, 168)' }}
+                                            variant="contained"
+                                            onClick={() => { handleChooseThisRoom(item.number) }}
+                                        >{!rooms.includes(item.number) ? 'Reserve' : 'Unreserve'}</Button>
+                                    </div>
                                 </div>
-                                <FontAwesomeIcon icon={faThumbsUp} className={style.like} />
                             </div>
-                            <div className={style.roomTextBody}>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </div>
-                        </div>
-                        <div className={style.roomReserve}>
-                            <div className={style.roomReserveRating}>
-                                <RatingScore />
-                                <div className={style.score}>9.1</div>
-
-                            </div>
-                            <div className={style.roomReserveLocation}>Location 9.3</div>
-                            <div className={style.roomReservePrice}>$500</div>
-                            <div className={style.roomReserveButton}>
-                                <Button
-                                    style={{ backgroundColor: 'rgb(36, 36, 168)' }}
-                                    variant="contained"
-                                    onClick={() => { handleChooseThisRoom(2) }}
-                                >{!rooms.includes(2) ? 'Reserve' : 'Unreserve'}</Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`${style.room}`}>
-                        <div className={style.roomImage}><img src={slide3} className={style.roomImg} alt='pic' /></div>
-                        <div className={style.roomText}>
-                            <div className={style.rating}>
-                                <div className={style.titleRating}>Silverland Sakyo Hotel</div>
-                                <div className={style.stars}>
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                    <FontAwesomeIcon icon={faStar} className={style.icon} />
-                                </div>
-                                <FontAwesomeIcon icon={faThumbsUp} className={style.like} />
-                            </div>
-                            <div className={style.roomTextBody}>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </div>
-                        </div>
-                        <div className={style.roomReserve}>
-                            <div className={style.roomReserveRating}>
-                                <RatingScore />
-                                <div className={style.score}>9.1</div>
-
-                            </div>
-                            <div className={style.roomReserveLocation}>Location 9.3</div>
-                            <div className={style.roomReservePrice}>$500</div>
-                            <div className={style.roomReserveButton}>
-                                <Button
-                                    style={{ backgroundColor: 'rgb(36, 36, 168)' }}
-                                    variant="contained"
-                                    onClick={() => { handleChooseThisRoom(3) }}
-                                >{!rooms.includes(3) ? 'Reserve' : 'Unreserve'}</Button>
-                            </div>
-                        </div>
-                    </div>
+                        )
+                        )
+                    }
                     <Pagination onChange={(_, value) => {
                         setCondition(pre => ({ ...pre, page: value }))
-                    }} count={10} shape="rounded" />
+                    }} count={Math.round(condition.totalPage)} shape="rounded" />
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

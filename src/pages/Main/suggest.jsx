@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
 import style from './Main.module.scss';
 import { Checkbox, FormControlLabel, Button, Pagination } from '@mui/material';
@@ -11,6 +11,8 @@ import RatingScore from './ratingScore';
 import axios from 'axios';
 import Img from './img';
 import { toast } from 'react-toastify';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
 
 const roomType = [
@@ -49,21 +51,41 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
             }))
         }
     }
+    const tokenRef = useRef(null);
+    const stompClientRef = useRef(null);
+
     useEffect(() => {
         const makeReservation = async () => {
             try {
-                const response = await axios.post(`http://localhost:8080/api/reservation/chooseRoom`, {
+                const response = await axios.post('http://localhost:8080/api/reservation/chooseRoom', {
                     from: dateRange.checkInDate,
                     to: dateRange.checkOutDate,
                 });
-                setToken(response.data)
+                setToken(response.data);
+                tokenRef.current = response.data;
+
+                const socket = new SockJS('http://localhost:8080/ws');
+                const stomp = Stomp.over(socket);
+                stompClientRef.current = stomp;
+
+                stomp.connect({}, () => {
+                    stomp.send('/app/connect', {}, JSON.stringify({ guest: tokenRef.current }));
+                });
 
             } catch (error) {
                 console.error('Error in reservation process:', error);
             }
         };
+
         makeReservation();
-    }, [])
+
+        return () => {
+            if (stompClientRef.current) {
+                stompClientRef.current.disconnect();
+            }
+        };
+    }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             try {

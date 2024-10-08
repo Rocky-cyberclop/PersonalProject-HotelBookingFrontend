@@ -21,7 +21,7 @@ function ThirdFloor({ toggleRoomInfo, reserveInfo, triggerBindingOnMessageReceiv
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const roomResponse = axios.get('http://localhost:8080/api/room/floor/3');
+                const roomResponse = axios.get('http://localhost:8080/api/room/public/floor/3');
                 const roomBookedResponse = axios.post(`http://localhost:8080/api/reservation/floor`, { guest: guest, from: from, to: to });
 
                 const [roomData, roomBookedData] = await Promise.all([roomResponse, roomBookedResponse]);

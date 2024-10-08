@@ -21,7 +21,7 @@ function FirstFloor({ toggleRoomInfo, reserveInfo, triggerBindingOnMessageReceiv
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const roomResponse = await axios.get('http://localhost:8080/api/room/floor/1');
+                const roomResponse = await axios.get('http://localhost:8080/api/room/public/floor/1');
                 setRooms(roomResponse.data);
                 const roomBookedResponse = await axios.post(`http://localhost:8080/api/reservation/floor`, { guest: guest, from: from, to: to });
                 if (roomBookedResponse.data.length !== 0) {

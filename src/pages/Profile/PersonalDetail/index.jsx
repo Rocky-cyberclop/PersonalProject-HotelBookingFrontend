@@ -7,7 +7,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
 
 function PersonalDetail() {
 
@@ -21,7 +20,6 @@ function PersonalDetail() {
         dateOfBirth: new dayjs()
     })
     const [isEdit, setIsEdit] = useState(false)
-    const navigate = useNavigate();
 
     const fetchData = async () => {
         try {
@@ -62,7 +60,7 @@ function PersonalDetail() {
     };
 
     const handleDateChange = (date) => {
-        setUser({ ...user, dateOfBirth:  dayjs(date, 'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ') });
+        setUser({ ...user, dateOfBirth: dayjs(date, 'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ') });
     };
 
     const updateData = async () => {
@@ -75,7 +73,7 @@ function PersonalDetail() {
                     }
                 }
             );
-            
+
         } catch (error) {
             console.error('Error update data:', error);
         }

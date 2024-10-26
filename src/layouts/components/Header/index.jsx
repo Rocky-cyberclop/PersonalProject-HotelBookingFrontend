@@ -1,3 +1,4 @@
+/* eslint-disable */
 import style from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -46,6 +47,7 @@ function Header() {
                         { ...pre, color: getAvatarColor() }
                     ))
                 } catch (error) {
+                    HandleLogout()
                     // console.log('You had to login to get email');
                 }
             }

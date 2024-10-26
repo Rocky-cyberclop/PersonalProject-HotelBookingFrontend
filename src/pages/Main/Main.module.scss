@@ -284,6 +284,23 @@
         .filterType {
           padding: 15px;
           border-bottom: 1px solid rgb(206, 206, 206);
+          .priceRange {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .priceRangeText {
+              font-size: 13px;
+              padding: 5px;
+              border: 1px rgb(206, 206, 206) solid;
+              border-radius: 10px;
+              width: 30%;
+            }
+            .priceRangeSpace {
+              background-color: rgb(206, 206, 206);
+              height: 1px;
+              width: 40%;
+            }
+          }
           .filterTypeItem {
           }
         }

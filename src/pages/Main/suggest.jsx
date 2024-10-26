@@ -13,6 +13,8 @@ import Img from './img';
 import { toast } from 'react-toastify';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
 
 
 const roomType = [
@@ -37,8 +39,15 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
     const [dataFound, setDataFound] = useState([])
     const [token, setToken] = useState('')
     const [rooms, setRooms] = useState([])
-    const [condition, setCondition] = useState({ page: 1, filterArray: [], totalPage: 0, totalValue: 0 })
+    const [condition, setCondition] = useState({
+        page: 1,
+        filterArray: [],
+        totalPage: 0,
+        totalValue: 0,
+        price: 500
+    })
     const navigate = useNavigate()
+    const [debouncedValue, setDebouncedValue] = useState(500);
     const HandleChosseFilter = (e) => {
         const existed = condition?.filterArray?.indexOf(e.target.value)
         if (existed === -1) {
@@ -97,7 +106,8 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                         filter: condition.filterArray,
                         adults: people.adults,
                         children: people.children,
-                        numberOfRoom: 10
+                        numberOfRoom: 10,
+                        price: condition.price
                     }
                 );
                 setDataFound(response.data.rooms)
@@ -118,9 +128,19 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
     }, [
         condition?.filterArray,
         condition?.page,
+        condition.price,
         dateRange.checkInDate, dateRange.checkOutDate,
-        people.room
+        people.room,
     ])
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setCondition(pre => ({ ...pre, price: debouncedValue }));
+        }, 300);
+
+        return () => clearTimeout(handler);
+    }, [debouncedValue]);
+
     const handleChooseThisRoom = (number) => {
         const existed = rooms.indexOf(number)
         if (existed === -1) {
@@ -182,6 +202,35 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                     <div className={style.advertisement}>
                         <div className={style.filterHeader}>
                             Filter by:
+                        </div>
+                        <div className={style.filterType}>
+                            <div className={`${style.textBold}`}>
+                                Price range:
+                            </div>
+                            <div>
+                                1 night per room
+                            </div>
+                            <div>
+                                <Box sx={{ width: '100%' }}>
+                                    <Slider
+                                        value={debouncedValue}
+                                        aria-label="Default"
+                                        valueLabelDisplay="auto"
+                                        min={100}
+                                        max={900}
+                                        onChange={(_, value) => {
+                                            setDebouncedValue(value)
+                                        }}
+                                    />
+                                </Box>
+                                <div className={style.priceRange}>
+                                    <div className={style.priceRangeText}>USD 100</div>
+                                    <div className={style.priceRangeSpace}>
+
+                                    </div>
+                                    <div className={style.priceRangeText}>USD 900</div>
+                                </div>
+                            </div>
                         </div>
                         <div className={style.filterType}>
                             <div className={`${style.textBold}`}>

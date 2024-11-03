@@ -305,7 +305,8 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                                         <FontAwesomeIcon icon={faThumbsUp} className={style.like} />
                                     </div>
                                     <div className={style.roomTextBody}>
-                                        {item.description}
+                                        {item.description}<br />
+                                        And has space for <span style={{ fontWeight: "bold" }}>{item.capacity} people</span>
                                     </div>
                                 </div>
                                 <div className={style.roomReserve}>

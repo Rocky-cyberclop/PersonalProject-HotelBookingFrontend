@@ -47,7 +47,9 @@ function Header() {
                         { ...pre, color: getAvatarColor() }
                     ))
                 } catch (error) {
-                    HandleLogout()
+                    localStorage.removeItem('token')
+                    setUser({})
+                    navigate('/')
                     // console.log('You had to login to get email');
                 }
             }

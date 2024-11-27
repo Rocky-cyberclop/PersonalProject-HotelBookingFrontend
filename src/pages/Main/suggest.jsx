@@ -107,7 +107,8 @@ const SuggestPage = ({ handleChooseOwn, dateRange, people }) => {
                         adults: people.adults,
                         children: people.children,
                         numberOfRoom: 10,
-                        price: condition.price
+                        price: condition.price,
+                        selectedRooms: rooms,
                     }
                 );
                 setDataFound(response.data.rooms)
